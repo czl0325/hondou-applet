@@ -1,2 +1,12 @@
 <!--miniprogram/pages/me/me.wxml-->
-<text>miniprogram/pages/me/me.wxml</text>
+<view class="container">
+  <view class="me-view">
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+      <image src="{{userInfo.avatarUrl}}"></image>
+    </button>
+    <view class="name-contaniner">
+      <text style="font-size:40rpx;font-weight:bold;color:white;">{{userInfo.nickName}}</text>
+      <text style="color:white;">{{userInfo.phone}}</text>
+    </view>
+  </view>
+</view>

@@ -1,4 +1,11 @@
 // miniprogram/pages/home/home.js
+
+import {
+  Request
+} from '../../http/request.js'
+
+var requestModel = new Request()
+
 Page({
 
   /**
@@ -12,7 +19,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    requestModel.register({
+      openId: "111"
+    }).then(res => {
+      console.log(res)
+    })
   },
 
   /**
