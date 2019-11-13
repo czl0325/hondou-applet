@@ -1,2 +1,4 @@
 <!--miniprogram/pages/home/home.wxml-->
-<text>miniprogram/pages/home/home.wxml</text>
+<view class="container">
+  <button >测试</button>
+</view>

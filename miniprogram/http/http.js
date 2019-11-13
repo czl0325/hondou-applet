@@ -18,17 +18,40 @@ class HTTP {
           wx.hideNavigationBarLoading()
           wx.stopPullDownRefresh()
           console.log(res)
-          if (parseInt(res.result.code) == 0) {
-            resolve(res.result.data)
-          } else {
-            if (res.result.message) {
+          if (res.errMsg === 'cloud.callFunction:ok') {
+            if (res.result) {
+              if (parseInt(res.result.code) == 0) {
+                if (!res.result.data) {
+                  wx.showToast({
+                    title: res.result.message,
+                  })
+                }
+                resolve(res.result.data)
+              } else {
+                if (res.result.message) {
+                  wx.showToast({
+                    title: res.result.message,
+                    icon: 'none',
+                    duration: 2000
+                  })
+                  reject(res.result.message)
+                }
+              }
+            } else {
               wx.showToast({
-                title: res.result.message,
+                title: "返回空数据",
                 icon: 'none',
                 duration: 2000
               })
-              reject(res.result.message)
+              reject(res.errMsg)
             }
+          } else {
+            wx.showToast({
+              title: res.errMsg,
+              icon: 'none',
+              duration: 2000
+            })
+            reject(res.errMsg)
           }
         },
         fail: err => {

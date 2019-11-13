@@ -1,0 +1,32 @@
+.item-cell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  /* padding: 0 20rpx; */
+  background-color: white;
+}
+
+.item-cell .title {
+  flex-grow: 1;
+  min-width: 150rpx;
+  text-align: left;
+}
+
+.item-cell picker {
+  min-width: 350rpx;
+  text-align: right;
+}
+
+.item-cell .detail {
+  text-align: right;
+  max-width: 70%;
+}
+
+.item-cell .arrow {
+  width: 15rpx;
+  height: 27rpx;
+  margin-left: 10rpx;
+}

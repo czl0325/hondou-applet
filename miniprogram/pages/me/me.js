@@ -43,10 +43,17 @@ Page({
       avatarUrl: app.globalData.userInfo.avatarUrl,
       nickName: app.globalData.userInfo.nickName
     }).then(res=>{
-      console.log(res)
-      wx.showToast({
-        title: '注册成功!',
-      })
+      if (!res) {
+        wx.showToast({
+          title: '注册成功!',
+        })
+      }
+    })
+  },
+
+  toBindPhone(event) {
+    wx.navigateTo({
+      url: '../bindPhone/bindPhone',
     })
   }
 })

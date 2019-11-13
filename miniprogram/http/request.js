@@ -31,6 +31,17 @@ class Request extends HTTP {
       }
     })
   }
+
+  bindPhone(phone) {
+    return this.request({
+      name: 'user',
+      data: {
+        action: 'bindPhone',
+        openId: wx.getStorageSync("openId"),
+        phone: phone || ''
+      }
+    })
+  }
 }
 
 export {

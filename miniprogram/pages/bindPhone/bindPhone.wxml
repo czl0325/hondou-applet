@@ -1,0 +1,5 @@
+<!--pages/bindPhone/bindPhone.wxml-->
+<view class="container">
+  <input type="number" placeholder="请填写手机号码" bindinput="onInputPhone"></input>
+  <button style="width:95%;height:80rpx;margin-top:20rpx;line-height:80rpx;" bindtap="onBind">设置</button>
+</view>

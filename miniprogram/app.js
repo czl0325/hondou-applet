@@ -37,9 +37,10 @@ App({
       return this.getOpenId()
     }).then((openId)=>{
       this.globalData.userInfo.openId = openId
+      wx.setStorageSync("openId", openId)
       return requestModel.getUserInfo(openId)
     }).then(res=>{
-      
+      this.globalData.userInfo = res
     })
   },
 

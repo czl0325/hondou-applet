@@ -6,7 +6,10 @@
     </button>
     <view class="name-contaniner">
       <text style="font-size:40rpx;font-weight:bold;color:white;">{{userInfo.nickName}}</text>
-      <text style="color:white;">{{userInfo.phone}}</text>
+      <text style="color:white;" bindtap="toBindPhone">{{userInfo.phone.length>0?userInfo.phone:"点击设置电话号码"}}</text>
     </view>
   </view>
+
+  <v-cell class='cell' title='我参与的活动' />
+  <v-cell class='cell' title='我收藏的活动' />
 </view>

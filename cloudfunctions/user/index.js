@@ -14,11 +14,15 @@ exports.main = async(event, context) => {
   switch (event.action) {
     case "getUser":
       {
-        return getUserById(event)
+        return getUserById(event.openId)
       }
     case 'register':
       {
         return registerUser(event)
+      }
+    case 'bindPhone':
+      {
+        return bindPhone(event.openId, event.phone)
       }
     default:
       {
@@ -30,24 +34,36 @@ exports.main = async(event, context) => {
   }
 }
 
-async function getUserById(event) {
-  if (!event.openId) {
+async function getUserById(openId) {
+  if (!openId) {
     return {
-      code: 100,
+      code: 500,
       message: "用户openId为空!",
     }
   }
-  let result = await db.collection('user').doc(event.openId)
+  console.log(`传入的openId=${openId}`)
+  let result = await db.collection('user')
+    .where({
+      openId: openId
+    })
     .get().then(res => {
-      return {
-        code: 0,
-        message: "成功!",
-        data: res.data
+      if (res.data.length > 0) {
+        return {
+          code: 0,
+          message: "成功!",
+          data: res.data[0]
+        }
+      } else {
+        return {
+          code: 102,
+          message: "数据错误，请联系管理员!"
+        }
       }
     }).catch(err => {
+      console.log(`错误信息=${err}`)
       return {
         code: 102,
-        message: "找不到该用户!"
+        message: "您还没有注册，请点击头像进行注册!"
       }
     })
   return result
@@ -56,27 +72,36 @@ async function getUserById(event) {
 async function registerUser(event) {
   if (!event.openId) {
     return {
-      code: 101,
+      code: 500,
       message: '缺少openId'
     }
   }
   let user = await db.collection('user')
     .where({
       openId: event.openId
-    }).get().then(res=>{
+    }).get().then(res => {
       if (res.data.length > 0) {
         return res.data[0]
       } else {
         return null
       }
     })
-  console.log("测试下云函数更新")
   if (user != null && user._id != null) {
-    return {
-      code: 0,
-      message: "该用户已注册过!",
-      data: user
-    }
+    let result = await db.collection('user')
+      .where({
+        openId: event.openId,
+      }).update({
+        data: {
+          avatarUrl: event.avatarUrl,
+          nickName: event.nickName,
+          phone: event.phone,
+          updateTime: db.serverDate,
+        }
+      }).then(res => {
+
+      })
+    let newUser = await getUserById(event.openId)
+    return newUser
   } else {
     let result = await db.collection('user')
       .add({
@@ -88,19 +113,55 @@ async function registerUser(event) {
           createTime: db.serverDate,
         }
       }).then((res) => {
-        console.log('插入成功')
+        let e = {
+          openId: event.openId
+        }
+        //let newUser = await getUserById(e)
         return {
           code: 0,
-          message: "注册用户成功!",
+          message: "注册成功!"
         }
       }).catch((err) => {
-        console.error('插入失败')
         return {
           code: 101,
-          message: "注册用户成功!",
+          message: "注册失败!",
         }
       })
 
     return result
   }
+}
+
+async function bindPhone(openId, phone) {
+  if (!openId) {
+    return {
+      code: 500,
+      message: '缺少openId'
+    }
+  }
+  if (!phone) {
+    return {
+      code: 500,
+      message: '缺少电话号码'
+    }
+  }
+  let result = await db.collection('user')
+    .where({
+      openId: openId,
+    }).update({
+      data: {
+        phone: phone
+      }
+    }).then(res => {
+      return {
+        code: 0,
+        message: '设置电话号码成功'
+      }
+    }).catch(err => {
+      return {
+        code: 101,
+        message: '设置电话号码失败'
+      }
+    })
+  return result
 }
