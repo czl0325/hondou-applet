@@ -38,7 +38,14 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "发布活动",
+					"pathName": "pages/activity-edit/activity-edit",
+					"scene": null
+				}
+			]
 		}
 	}
 }

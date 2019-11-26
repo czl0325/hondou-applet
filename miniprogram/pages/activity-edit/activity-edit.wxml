@@ -1,2 +1,18 @@
 <!--miniprogram/pages/activity-edit/activity-edit.wxml-->
-<text>miniprogram/pages/activity-edit/activity-edit.wxml</text>
+<view class="container">
+  <input placeholder="请输入标题"></input>
+  <textarea placeholder="请输入内容"></textarea>
+  <view class="image-list">
+    <!-- 显示图片 -->
+    <block wx:for="{{images}}" wx:key="*this">
+      <view class="image-wrap">
+        <image class="image" src="{{item}}" mode="aspectFill" bind:tap="onPreviewImage" data-imgsrc="{{item}}"></image>
+        <!-- <i class="iconfont icon-shanchu" bind:tap="onDelImage" data-index="{{index}}"></i> -->
+      </view>
+    </block>
+    <!-- 选择图片 -->
+    <view class="image-wrap selectphoto" bind:tap="onChooseImage">
+      <i class="iconfont icon-add-copy"></i>
+    </view>
+  </view>
+</view>

@@ -1,1 +1,64 @@
 /* miniprogram/pages/activity-edit/activity-edit.wxss */
+
+input {
+  width: 95%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: white;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  margin-top: 20rpx;
+  border: 1px solid #d8d8d8;
+}
+
+textarea {
+  width: 95%;
+  height: 400rpx;
+  background-color: white;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  margin-top: 20rpx;
+  border: 1px solid #d8d8d8;
+}
+
+.image-list {
+  width: 95%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.image-wrap {
+  width: 220rpx;
+  height: 220rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.image-wrap:nth-child(3n) {
+  margin-right: 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.selectphoto {
+  border: 1px dashed #cbd1d7;
+  position: relative;
+}
+
+.icon-add-copy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #cbd1d7;
+  font-size: 80rpx;
+}
