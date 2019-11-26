@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "bottom-dialog":"/components/bottom-dialog/index"
+  }
+}

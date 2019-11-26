@@ -1,0 +1,7 @@
+<!--components/bottom-dialog/index.wxml-->
+<view class="container" hidden="{{!modalShow}}">
+  <view class="panel">
+    <i class="iconfont icon-close-hei" catchtap="onClose"></i>
+    <slot name="dialog-content"></slot>
+  </view>
+</view>

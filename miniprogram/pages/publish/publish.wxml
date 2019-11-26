@@ -1,0 +1,5 @@
+<!--pages/publish/publish.wxml-->
+<view class="container">
+  <input placeholder="请输入标题内容"></input>
+  <textarea placeholder="请输入文章内容"></textarea>
+</view>

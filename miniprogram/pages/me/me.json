@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "v-cell": "/components/item-cell/index"
+    "v-cell": "/components/item-cell/index",
+    "v-login": "/components/dialog-login/index"
   },
   "navigationBarTitleText": "我的",
   "navigationBarBackgroundColor": "#FE765E",

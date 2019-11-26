@@ -1,0 +1,9 @@
+/* components/dialog-login/index.wxss */
+.login {
+  font-size: 32rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #d43c33;
+  color: #fff;
+  margin: 40rpx;
+}

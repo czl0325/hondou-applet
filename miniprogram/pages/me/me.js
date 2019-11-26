@@ -12,7 +12,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {}
+    userInfo: {},
+    modalShow: false
   },
 
   /**
@@ -54,6 +55,47 @@ Page({
   toBindPhone(event) {
     wx.navigateTo({
       url: '../bindPhone/bindPhone',
+    })
+  },
+
+  toPublish(event) {
+    wx.getSetting({
+      success: (res) => {
+        if (res.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: (res) => {
+              wx.navigateTo({
+                url: '../activity-edit/activity-edit',
+              })
+            }
+          })
+        } else {
+          this.setData({
+            modalShow: true,
+          })
+        }
+      }
+    })
+  },
+
+  onLoginSuccess(event) {
+    console.log(event)
+    app.globalData.userInfo.nickName = event.detail.userInfo.nickName
+    app.globalData.userInfo.avatarUrl = event.detail.userInfo.avatarUrl
+    this.setData({
+      userInfo: app.globalData.userInfo
+    })
+    wx.showLoading({
+      title: '登录中...',
+      mask: true
+    })
+    requestModel.register({
+      avatarUrl: app.globalData.userInfo.avatarUrl,
+      nickName: app.globalData.userInfo.nickName
+    }).then(res => {
+      wx.navigateTo({
+        url: '../activity-edit/activity-edit',
+      })
     })
   }
 })
