@@ -1,0 +1,104 @@
+/* miniprogram/pages/activity-detail/activity-detail.wxss */
+
+.title {
+  width: 100%;
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-top: 20rpx;
+}
+
+.user-container {
+  width: 100%;
+  margin: 20rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.name {
+  margin-left: 10rpx;
+  flex: 1;
+  width: 0;
+}
+
+.time {
+  margin-left: 10rpx;
+}
+
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.image-container {
+  width: 100%;
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container image {
+  width: 100%;
+  min-height: 200rpx;
+  margin-top: 20rpx;
+}
+
+.image-container image:nth-child(0) {
+  margin-top: 0;
+}
+
+.bottom-view {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom-view button {
+  flex: 1;
+  height: 100%;
+  line-height: 100rpx;
+  background-color: white;
+  border-radius: 0;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30rpx;
+}
+
+.signup-container .user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.signup-container .user image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}

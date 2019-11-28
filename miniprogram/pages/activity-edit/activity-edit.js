@@ -1,66 +1,144 @@
 // miniprogram/pages/activity-edit/activity-edit.js
+import {
+  Request
+} from '../../http/request.js'
+
+var requestModel = new Request()
+var app = getApp()
+
+var title = ''
+var content = ''
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    images:[]
+    images: [],
+    signEndDate: '',
+    activityDate: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onAcitivityTitle(event) {
+    title = event.detail.value
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  onInputContent(event) {
+    content = event.detail.value
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  onChooseImage(event) {
+    wx.chooseImage({
+      count: 100,
+      sizeType: ['compressed'],
+      success: (res) => {
+        this.setData({
+          images: this.data.images.concat(res.tempFilePaths)
+        })
+      },
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  onDeleteImage(event) {
+    const index = event.currentTarget.dataset.index
+    this.data.images.splice(index, 1)
+    this.setData({
+      images: this.data.images
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  bindDateChange1(event) {
+    this.setData({
+      signEndDate: event.detail.value
+    })
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  bindDateChange2(event) {
+    this.setData({
+      activityDate: event.detail.value
+    })
+    
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onPublish(event) {
+    if (title.trim().length <= 0) {
+      wx.showToast({
+        title: '标题不能为空',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (this.data.signEndDate === '') {
+      wx.showToast({
+        title: '报名截止时间必填',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (this.data.activityDate === '') {
+      wx.showToast({
+        title: '活动开始时间必填',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    var date1 = new Date(this.data.signEndDate)
+    var date2 = new Date(this.data.activityDate)
+    if (date2 < date1) {
+      wx.showToast({
+        title: '活动开始时间不得早于报名截止时间',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    wx.showLoading({
+      title: '发布中',
+      mask: true,
+    })
+    var promises = []
+    let fileIds = []
+    for (var i = 0, len = this.data.images.length; i < len; i++) {
+      let promise = new Promise((resolve, rejuect) => {
+        let image = this.data.images[i]
+        // 文件扩展名
+        let suffix = /\.\w+$/.exec(image)[0]
+        wx.cloud.uploadFile({
+          cloudPath: 'avtivity_images/' + new Date().getTime() + '_' + Math.random() * 1000000 + suffix,
+          filePath: image,
+          success: (res) => {
+            fileIds = fileIds.concat(res.fileID)
+            resolve()
+          },
+          fail: (err) => {
+            console.error(err)
+            reject()
+          }
+        })
+      })
+      promises.push(promise)
+    }
+    Promise.all(promises).then((res) => {
+      requestModel.publishActivity(app.globalData.userInfo, title, content, fileIds, this.data.signEndDate, this.data.activityDate).then(res => {
+        wx.navigateBack({
+          success: res => {
+            wx.showToast({
+              title: '活动发布成功',
+            })
+          }
+        })
+      })
+    })
   }
 })

@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "首页"
+  "usingComponents": {
+    "v-activity":"/components/item-activity/index"
+  },
+  "navigationBarTitleText": "首页",
+  "enablePullDownRefresh": true
 }

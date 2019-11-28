@@ -1,0 +1,65 @@
+/* components/item-activity/index.wxss */
+
+.item-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10rpx 20rpx;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.user-container {
+  margin: 20rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.name {
+  margin-left: 10rpx;
+  flex: 1;
+  width: 0;
+}
+
+.time {
+  margin-left: 10rpx;
+}
+
+.content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  vertical-align: top;
+}
+
+.image-container {
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.image-container image {
+  width: calc(100% / 3);
+  height: 230rpx;
+  margin-right: 20rpx;
+}
+
+.image-container image:nth-child(3) {
+  margin-right: 0;
+}

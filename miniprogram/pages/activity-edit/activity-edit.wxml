@@ -1,13 +1,13 @@
 <!--miniprogram/pages/activity-edit/activity-edit.wxml-->
-<view class="container">
-  <input placeholder="请输入标题"></input>
-  <textarea placeholder="请输入内容"></textarea>
+<view class="container" style="padding-bottom:120rpx;">
+  <input placeholder="请输入标题" bindinput="onAcitivityTitle"></input>
+  <textarea placeholder="请输入内容" bindinput="onInputContent"></textarea>
   <view class="image-list">
     <!-- 显示图片 -->
     <block wx:for="{{images}}" wx:key="*this">
       <view class="image-wrap">
         <image class="image" src="{{item}}" mode="aspectFill" bind:tap="onPreviewImage" data-imgsrc="{{item}}"></image>
-        <!-- <i class="iconfont icon-shanchu" bind:tap="onDelImage" data-index="{{index}}"></i> -->
+        <i class="iconfont icon-close-hei" bind:tap="onDeleteImage" data-index="{{index}}"></i>
       </view>
     </block>
     <!-- 选择图片 -->
@@ -15,4 +15,19 @@
       <i class="iconfont icon-add-copy"></i>
     </view>
   </view>
+  
+  <text style="width:100%;margin-top:20rpx;margin-left:20rpx;">选择报名截止日期</text>
+  <picker mode="date" value="{{signEndDate}}" bindchange="bindDateChange1" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
+    <view class="picker">
+      当前选择: {{signEndDate}}
+    </view>
+  </picker>
+  <text style="width:100%;margin-top:20rpx;margin-left:20rpx;">选择活动开始日期</text>
+  <picker mode="date" value="{{activityDate}}" bindchange="bindDateChange2" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
+    <view class="picker">
+      当前选择: {{activityDate}}
+    </view>
+  </picker>
 </view>
+
+<button class="publish" bindtap="onPublish">发布活动</button>

@@ -1,6 +1,5 @@
 class HTTP {
   constructor() {
-    
   }
 
   request(params) {
@@ -17,7 +16,6 @@ class HTTP {
           wx.hideLoading()
           wx.hideNavigationBarLoading()
           wx.stopPullDownRefresh()
-          console.log(res)
           if (res.errMsg === 'cloud.callFunction:ok') {
             if (res.result) {
               if (parseInt(res.result.code) == 0) {
@@ -35,6 +33,13 @@ class HTTP {
                     duration: 2000
                   })
                   reject(res.result.message)
+                } else {
+                  wx.showToast({
+                    title: `错误:${res.result.code}`,
+                    icon: 'none',
+                    duration: 2000
+                  })
+                  reject(res.result.code)
                 }
               }
             } else {

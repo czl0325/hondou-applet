@@ -1,0 +1,15 @@
+<!--components/item-activity/index.wxml-->
+<view class="item-container" bindtap="onClickActivity">
+  <text class="title">{{activity.title}}</text>
+  <view class="user-container">
+    <image src="{{activity.avatarUrl}}" class="avatar" mode="aspectFill"></image>
+    <text class="name">{{activity.nickName}}</text>
+    <text class="time">{{_createTime}}</text>
+  </view>
+  <text class="content">{{activity.content}}</text>
+  <view class="image-container">
+    <block wx:for="{{_images}}" wx:key="*this">
+      <image src="{{item}}"></image>
+    </block>
+  </view>
+</view>

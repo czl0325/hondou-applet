@@ -1,0 +1,40 @@
+<!--miniprogram/pages/activity-detail/activity-detail.wxml-->
+<wxs src="../../utils/tools.wxs" module="tool" />
+
+<view class="container" style="padding:0 20rpx 100rpx;">
+  <text class="title">{{activity.title}}</text>
+  <view class="user-container">
+    <image src="{{activity.avatarUrl}}" class="avatar" mode="aspectFill"></image>
+    <text class="name">{{activity.nickName}}</text>
+    <text class="time">{{tool.formatTime(activity.createTime)}}</text>
+  </view>
+  <text class="content">{{activity.content}}</text>
+  <view class="image-container">
+    <block wx:for="{{activity.images}}" wx:key="*this">
+      <image src="{{item}}"></image>
+    </block>
+  </view>
+  <view style="width:100%;margin:20rpx 0;">
+    <text class="title">报名人员:</text>
+    <view class="signup-container" wx:if="{{activity.participants.length>0}}">
+      <block wx:for="{{activity.participants}}" wx:key="_openid">
+        <view class="user" bindtap="onClickUser" data-index="{{index}}">
+          <image src="{{item.avatarUrl}}"></image>
+          <text style="margin-top:10rpx;font-size:26rpx;">{{item.nickName}}</text>
+        </view>
+      </block>
+    </view>
+    <view wx:else>暂无人员报名</view>
+  </view>
+</view>
+
+<view class="bottom-view">
+  <button bindtap="onCollect">
+    <image src="{{isCollect?'../../images/icon_collect_hl.png':'../../images/icon_collect_nor.png'}}" style="width:45rpx;height:40rpx;"></image>
+    <text style="margin-left:10rpx;{{(isCollect==true)?'color:#FE765E':'color:#333'}}">{{(isCollect==true)?"已收藏":"点击收藏"}}</text>
+  </button>
+  <button bindtap="onSignUp">
+    <image src="{{isSignup?'../../images/icon_signup_hl.png':'../../images/icon_signup_nor.png'}}" style="width:38rpx;height:40rpx;"></image>
+    <text style="margin-left:20rpx;{{(isSignup==true)?'color:#FE765E':'color:#333'}}">{{(isSignup==true)?"已报名":"点击报名"}}</text>
+  </button>
+</view>

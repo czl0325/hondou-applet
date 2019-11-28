@@ -94,7 +94,7 @@ async function registerUser(event) {
           avatarUrl: event.avatarUrl,
           nickName: event.nickName,
           phone: event.phone,
-          updateTime: db.serverDate,
+          updateTime: db.serverDate(),
         }
       }).then(res => {
 
@@ -107,7 +107,7 @@ async function registerUser(event) {
       avatarUrl: event.avatarUrl,
       nickName: event.nickName,
       phone: event.phone,
-      createTime: db.serverDate,
+      createTime: db.serverDate(),
     }
     let result = await db.collection('user')
       .add({
