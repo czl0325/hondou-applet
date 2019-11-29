@@ -28,10 +28,9 @@ exports.main = async(event, context) => {
       title: event.title,
       content: event.content,
       images: event.images ? event.images : [],
-      singEndDate: Date.parse(event.singEndDate + " 23:59:59"),
-      activityDate: Date.parse(event.singEndDate),
-      createTime: db.serverDate(),
-      participants: [] //参与者
+      signEndDate: Date.parse(event.signEndDate),
+      activityDate: Date.parse(event.activityDate),
+      createTime: event.createTime ? event.createTime : db.serverDate()
     }
     let _id = await db.collection('activity').add({
       data: {
@@ -61,9 +60,9 @@ exports.main = async(event, context) => {
     var filtrate = {}
     if (event.type != null) {
       if (event.type == 1) {
-        filtrate.activityDate = db.command.lt(new Date().getTime())
-      } else if (event.type == 2) {
         filtrate.activityDate = db.command.gte(new Date().getTime())
+      } else if (event.type == 2) {
+        filtrate.activityDate = db.command.lt(new Date().getTime())
       }
     }
     if (event.keyword != null && event.keyword.length > 0) {
@@ -92,7 +91,7 @@ exports.main = async(event, context) => {
   app.router('detail', async(ctx, next) => {
     if (event.activity_id == null) {
       result.code = 100
-      result.message = "缺少参数_id"
+      result.message = "缺少参数activity_id"
     } else {
       let activity = await db.collection('activity').where({
         _id: event.activity_id
@@ -111,10 +110,34 @@ exports.main = async(event, context) => {
     ctx.body = result
   })
 
+  app.router('join', async(ctx, next)=>{
+    if (event.activity_id == null) {
+      result.code = 100
+      result.message = "缺少参数activity_id"
+    } else {
+      let list = await db.collection('signup').where({
+        activity_id: event.activity_id
+      }).orderBy('createTime', 'desc').get().then(res => {
+        return res.data
+      }).catch(err => {
+        return null
+      })
+      if (list != null) {
+        result.data = list
+      } else {
+        result.code = 500
+        result.message = "查找不到数据"
+      }
+    }
+    ctx.body = result
+  })
+
   app.router('collect', async(ctx, next) => {
-    var collect = 0 //0收藏 1取消收藏
-    if (event.collect) {
-      collect = parseInt(event.collect)
+    if (event.collect == null) {
+      result.code = 100
+      result.message = "缺少参数collect"
+      ctx.body = result
+      await next();
     }
     if (event.activity_id == null) {
       result.code = 100
@@ -135,8 +158,8 @@ exports.main = async(event, context) => {
         return null
       })
       let myopenid = event.openid ? event.openid : OPENID
-
-      if (collect == 0) {
+      var collect = parseInt(event.collect)
+      if (collect == 1) {
         let list = await db.collection('collect').where({
           activity_id: event.activity_id,
           _openid: myopenid
@@ -154,7 +177,8 @@ exports.main = async(event, context) => {
               activity_id: event.activity_id,
               avatarUrl: event.avatarUrl,
               nickName: event.nickName,
-              _openid: myopenid
+              _openid: myopenid,
+              createTime: db.serverDate()
             }
           }).then((res) => {
             return res._id
@@ -217,9 +241,11 @@ exports.main = async(event, context) => {
   })
 
   app.router('signup', async(ctx, next) => {
-    var signup = 0 //0报名 1取消报名
-    if (event.signup) {
-      signup = parseInt(event.signup)
+    if (event.signup == null){
+      result.code = 100
+      result.message = "缺少参数signup"
+      ctx.body = result
+      await next();
     }
     if (event.activity_id == null) {
       result.code = 100
@@ -241,7 +267,8 @@ exports.main = async(event, context) => {
       })
       let myopenid = event.openid ? event.openid : OPENID
 
-      if (signup == 0) {
+      var signup = parseInt(event.signup)
+      if (signup == 1) {
         let list = await db.collection('signup').where({
           activity_id: event.activity_id,
           _openid: myopenid
@@ -259,7 +286,8 @@ exports.main = async(event, context) => {
               activity_id: event.activity_id,
               avatarUrl: event.avatarUrl,
               nickName: event.nickName,
-              _openid: myopenid
+              _openid: myopenid,
+              createTime: db.serverDate()
             }
           }).then((res) => {
             return res._id
@@ -271,19 +299,6 @@ exports.main = async(event, context) => {
             result.code = 500
             result.message = "数据插入失败"
           } else {
-            var participants = activity.participants
-            participants.push(user)
-            let number = db.collection('activity').where({
-              _id: event.activity_id
-            }).update({
-              data: {
-                participants: participants
-              }
-            }).then((res) => {
-              return res.stats.updated
-            }).catch((err) => {
-              return null
-            })
             result.message = "报名成功"
             result.data = {
               signup: true
@@ -304,21 +319,6 @@ exports.main = async(event, context) => {
           result.code = 500
           result.message = "数据删除失败"
         } else {
-          var participants = activity.participants
-          participants = participants.filter(function(item) {
-            return p._openid != myopenid
-          });
-          let number = db.collection('activity').where({
-            _id: event.activity_id
-          }).update({
-            data: {
-              participants: participants
-            }
-          }).then((res) => {
-            return res.stats.updated
-          }).catch((err) => {
-            return null
-          })
           result.message = "取消报名成功"
           result.data = {
             signup: false

@@ -7,6 +7,6 @@
     </block>
   </view>
   <block wx:for="{{activities}}" wx:key="_id">
-    <v-activity class="item-container" activity="{{item}}" bind:click="toActivityDetail" />
+    <v-activity class="item-container" activity="{{item}}"/>
   </block>
 </view>

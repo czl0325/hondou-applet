@@ -21,7 +21,7 @@ App({
     Promise.resolve().then(()=>{
       return this.getOpenId()
     }).then((openId)=>{
-      this.globalData.userInfo.openId = openId
+      this.globalData.userInfo._openid = openId
       wx.setStorageSync("openId", openId)
       return requestModel.getUserInfo(openId)
     }).then(res=>{
@@ -45,7 +45,7 @@ App({
 
   globalData: {
     userInfo: {
-      openId: '',
+      _openid: '',
       nickName: '未登录',
       avatarUrl: '',
       phone: '未设置手机号码'

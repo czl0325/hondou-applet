@@ -43,18 +43,19 @@ class Request extends HTTP {
     })
   }
 
-  publishActivity(user, title, content, images, singEndDate, activityDate) {
+  publishActivity(user, title, content, images, signEndDate, activityDate) {
     return this.request({
       name: 'activity',
       data: {
         title,
         content,
         images,
-        singEndDate,
+        signEndDate,
         activityDate,
         $url: 'publish',
         avatarUrl: user.avatarUrl,
-        nickName: user.nickName
+        nickName: user.nickName,
+        createTime: wx.cloud.database().serverDate()
       }
     })
   }
@@ -71,7 +72,27 @@ class Request extends HTTP {
     })
   }
 
-  collectActivity(activity_id, user, collect=0) {
+  getActivityDetail(activity_id) {
+    return this.request({
+      name: 'activity',
+      data: {
+        activity_id,
+        $url: 'detail'
+      }
+    })
+  }
+
+  getParticipants(activity_id) {
+    return this.request({
+      name: 'activity',
+      data: {
+        activity_id,
+        $url: 'join'
+      }
+    })
+  }
+
+  collectActivity(activity_id, user, collect=1) {
     return this.request({
       name: 'activity',
       data: {
@@ -94,7 +115,8 @@ class Request extends HTTP {
     })
   }
 
-  signupActivity(activity_id, user, signup=0) {
+  signupActivity(activity_id, user, signup=1) {
+    console.log(signup)
     return this.request({
       name: 'activity',
       data: {
@@ -113,6 +135,24 @@ class Request extends HTTP {
       data: {
         activity_id,
         $url: 'isSignup'
+      }
+    })
+  }
+
+  getMyCollect() {
+    return this.request({
+      name: 'user',
+      data: {
+        action: 'collect'
+      }
+    })
+  }
+
+  getMyJoin() {
+    return this.request({
+      name: 'user',
+      data: {
+        action: 'join'
       }
     })
   }

@@ -5,7 +5,7 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async(event, context) => {
-  if (!event.action) {
+  if (event.action == null || event.action.length <= 0) {
     return {
       code: 500,
       message: "缺少action!",
@@ -28,6 +28,14 @@ exports.main = async(event, context) => {
     case 'bindPhone':
       {
         return bindPhone(event._openid, event.phone)
+      }
+    case "collect":
+      {
+        return getMyCollect(event._openid)
+      }
+    case "join":
+      {
+        return getMyJoin(event._openid)
       }
     default:
       {
@@ -100,13 +108,17 @@ async function registerUser(event) {
 
       })
     let newUser = await getUserById(event._openid)
-    return newUser
+    return {
+      code: 0,
+      message: "登录成功!",
+      data: newUser
+    }
   } else {
     const user = {
       _openid: event._openid,
       avatarUrl: event.avatarUrl,
       nickName: event.nickName,
-      phone: event.phone,
+      phone: event.phone ? event.phone : '',
       createTime: db.serverDate(),
     }
     let result = await db.collection('user')
@@ -115,8 +127,7 @@ async function registerUser(event) {
           ...user
         }
       }).then((res) => {
-        user._id = event._openid
-        //let newUser = await getUserById(e)
+        user._id = res._id
         return {
           code: 0,
           message: "注册成功!",
@@ -165,4 +176,73 @@ async function bindPhone(openId, phone) {
       }
     })
   return result
+}
+
+async function getMyCollect(openId) {
+  let collects = await db.collection('collect').where({
+    _openid: openId
+  }).orderBy('createTime', 'desc').get().then(res=>{
+    return res.data
+  }).catch(err=>{
+    return null
+  })
+  if (collects == null) {
+    return {
+      code: 500,
+      message: "数据库读取错误"
+    }
+  }
+  var activities = []
+  for (let c of collects) {
+    let activity = await db.collection('activity').where({
+      $url: 'detail',
+      activity_id: c.activity_id
+    }).get().then(res=>{
+      return res.data
+    }).catch(err=>{
+      return null
+    })
+    if (activity != null) {
+      activities.push(activity)
+    }
+  }
+  return {
+    code: 0,
+    message: "读取我的收藏成功",
+    data: activities
+  }
+}
+
+async function getMyJoin(openId) {
+  let signups = await db.collection('signup').where({
+    _openid: openId
+  }).orderBy('createTime', 'desc').get().then(res => {
+    return res.data
+  }).catch(err => {
+    return null
+  })
+  if (signups == null) {
+    return {
+      code: 500,
+      message: "数据库读取错误"
+    }
+  }
+  var activities = []
+  for (let s of signups) {
+    let activity = await db.collection('activity').where({
+      _id: s.activity_id
+    }).get().then(res => {
+      return res.data
+    }).catch(err => {
+      return null
+    })
+    if (activity != null && activity.length > 0) {
+      activities.push(activity[0])
+    }
+  }
+  return {
+    code: 0,
+    message: "读取我报名的成功",
+    data: activities
+  }
 }

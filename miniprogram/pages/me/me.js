@@ -59,27 +59,32 @@ Page({
   },
 
   toPublish(event) {
-    wx.getSetting({
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: (res) => {
-              wx.navigateTo({
-                url: '../activity-edit/activity-edit',
-              })
-            }
-          })
-        } else {
-          this.setData({
-            modalShow: true,
-          })
+    if (app.globalData.userInfo._id != null) {
+      wx.navigateTo({
+        url: '../activity-edit/activity-edit',
+      })
+    } else {
+      wx.getSetting({
+        success: (res) => {
+          if (res.authSetting['scope.userInfo']) {
+            wx.getUserInfo({
+              success: (res) => {
+                wx.navigateTo({
+                  url: '../activity-edit/activity-edit',
+                })
+              }
+            })
+          } else {
+            this.setData({
+              modalShow: true,
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
 
   onLoginSuccess(event) {
-    console.log(event)
     app.globalData.userInfo.nickName = event.detail.userInfo.nickName
     app.globalData.userInfo.avatarUrl = event.detail.userInfo.avatarUrl
     this.setData({
@@ -96,6 +101,12 @@ Page({
       wx.navigateTo({
         url: '../activity-edit/activity-edit',
       })
+    })
+  },
+
+  toMyActivity(event) {
+    wx.navigateTo({
+      url: `../my-activity/my-activity?type=${event.currentTarget.dataset.index}`,
     })
   }
 })

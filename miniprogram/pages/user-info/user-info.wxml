@@ -1,2 +1,9 @@
 <!--pages/user-info/user-info.wxml-->
-<text>pages/user-info/user-info.wxml</text>
+<view class="container">
+  <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  <text>{{userInfo.nickName}}</text>
+  <view class="phone">
+    <text>{{userInfo.phone}}</text>
+    <image style="width:60rpx;height:60rpx;padding:10rpx;box-sizing:border-box;" src="../../images/icon_phone.png" bindtap="onCallPhone"></image>
+  </view>
+</view>

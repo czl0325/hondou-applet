@@ -11,11 +11,9 @@ Component({
 
   observers: {
     ['activity.createTime'](val) {
-      if (val) {
-        this.setData({
-          _createTime: utils.formatTime(val)
-        })
-      }
+      this.setData({
+        _createTime: utils.formatTime(val)
+      })
     },
     ['activity.images'](val) {
       if (val) {
@@ -42,8 +40,11 @@ Component({
    */
   methods: {
     onClickActivity(event) {
-      this.triggerEvent('click', {
-        activity: this.properties.activity
+      // this.triggerEvent('click', {
+      //   activity: this.properties.activity
+      // })
+      wx.navigateTo({
+        url: '../activity-detail/activity-detail?activity_id=' + this.properties.activity._id,
       })
     }
   }

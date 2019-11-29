@@ -1,4 +1,7 @@
 const formatTime = (date) => {
+  if (date == null) {
+    return ''
+  }
   if (typeof(date) != 'string') {
     date = date.toString()
   }
@@ -20,4 +23,4 @@ const formatTime = (date) => {
 
 module.exports = {
   formatTime
-} 
+}

@@ -11,8 +11,8 @@
     <image src="../../images/icon_add.png" style="width:80rpx;height:80rpx;" bindtap="toPublish"></image>
   </view>
 
-  <v-cell class='cell' title='我参与的活动' />
-  <v-cell class='cell' title='我收藏的活动' />
+  <v-cell class='cell' title='我参与的活动' bindtap="toMyActivity" data-index="1"/>
+  <v-cell class='cell' title='我收藏的活动' bindtap="toMyActivity" data-index="2"/>
 </view>
 
 <v-login modalShow="{{modalShow}}" bind:loginSuccess="onLoginSuccess" bind:loginFail="onLoginFail"/>

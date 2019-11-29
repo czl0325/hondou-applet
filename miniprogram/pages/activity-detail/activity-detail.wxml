@@ -8,23 +8,25 @@
     <text class="name">{{activity.nickName}}</text>
     <text class="time">{{tool.formatTime(activity.createTime)}}</text>
   </view>
-  <text class="content">{{activity.content}}</text>
+  <rich-text class="content" nodes="{{activity.content}}"></rich-text>
   <view class="image-container">
     <block wx:for="{{activity.images}}" wx:key="*this">
       <image src="{{item}}"></image>
     </block>
   </view>
+  <text style="margin-top:20rpx;width:100%;">报名截止时间:{{tool.timeStampToDate(activity.signEndDate)}}</text>
+  <text style="margin-top:20rpx;width:100%;">活动开始时间:{{tool.timeStampToDate(activity.activityDate)}}</text>
   <view style="width:100%;margin:20rpx 0;">
     <text class="title">报名人员:</text>
-    <view class="signup-container" wx:if="{{activity.participants.length>0}}">
-      <block wx:for="{{activity.participants}}" wx:key="_openid">
+    <view class="signup-container" wx:if="{{participants.length>0}}">
+      <block wx:for="{{participants}}" wx:key="_openid">
         <view class="user" bindtap="onClickUser" data-index="{{index}}">
           <image src="{{item.avatarUrl}}"></image>
           <text style="margin-top:10rpx;font-size:26rpx;">{{item.nickName}}</text>
         </view>
       </block>
     </view>
-    <view wx:else>暂无人员报名</view>
+    <view wx:else style="margin:30rpx 0;color:#999;">暂无人员报名</view>
   </view>
 </view>
 
@@ -38,3 +40,5 @@
     <text style="margin-left:20rpx;{{(isSignup==true)?'color:#FE765E':'color:#333'}}">{{(isSignup==true)?"已报名":"点击报名"}}</text>
   </button>
 </view>
+
+<v-login modalShow="{{modalShow}}" bind:loginSuccess="onLoginSuccess" bind:loginFail="onLoginFail"/>

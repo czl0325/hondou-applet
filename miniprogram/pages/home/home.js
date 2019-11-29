@@ -5,6 +5,7 @@ import {
 } from '../../http/request.js'
 
 var requestModel = new Request()
+var event = require('../../utils/event.js')
 
 var pageNum = 0
 
@@ -23,7 +24,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    event.on('publishSuccess', this, function (activity) {
+      this.data.activities.unshift(activity)
+      this.setData({
+        activities: this.data.activities
+      })
+    })
+
     this._getActivityList(true)
+  },
+
+  onUnload: function() {
+    event.remove("publishSuccess", this)
   },
   
   onPullDownRefresh: function () {
@@ -48,7 +60,7 @@ Page({
   toActivityDetail(event) {
     let activity = event.detail.activity
     wx.navigateTo({
-      url: '../activity-detail/activity-detail?activity=' + JSON.stringify(activity),
+      url: '../activity-detail/activity-detail?activity_id=' + activity._id,
     })
   },
 

@@ -4,6 +4,7 @@ import {
 } from '../../http/request.js'
 
 var requestModel = new Request()
+var myEvent = require('../../utils/event.js')
 var app = getApp()
 
 var title = ''
@@ -130,9 +131,10 @@ Page({
       promises.push(promise)
     }
     Promise.all(promises).then((res) => {
-      requestModel.publishActivity(app.globalData.userInfo, title, content, fileIds, this.data.signEndDate, this.data.activityDate).then(res => {
+      requestModel.publishActivity(app.globalData.userInfo, title, content, fileIds, this.data.signEndDate, this.data.activityDate).then(res1 => {
         wx.navigateBack({
-          success: res => {
+          success: res2 => {
+            myEvent.emit("publishSuccess", res1)
             wx.showToast({
               title: '活动发布成功',
             })

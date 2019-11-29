@@ -1,0 +1,6 @@
+<!--pages/my-activity/my-activity.wxml-->
+<view class="container">
+  <block wx:for="{{activities}}" wx:key="_id">
+    <v-activity class="item-container" activity="{{item}}" bind:click="toActivityDetail" />
+  </block>
+</view>

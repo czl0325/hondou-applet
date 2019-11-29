@@ -1,1 +1,17 @@
 /* pages/user-info/user-info.wxss */
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 30rpx;
+}
+
+.phone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30rpx;
+  color: #555;
+}

@@ -18,6 +18,23 @@ var formatTime = function (date) {
   }
 }
 
+var timeStampToDate = function date(timestamp) {
+  var time = getDate(timestamp);
+  var year = time.getFullYear();
+  var month = time.getMonth() + 1;
+  var date = time.getDate();
+  var hour = time.getHours();
+  var minute = time.getMinutes();
+  var second = time.getSeconds();
+  month = month < 10 ? "0" + month : month;
+  date = date < 10 ? "0" + date : date;
+  hour = hour < 10 ? "0" + hour : hour;
+  minute = minute < 10 ? "0" + minute : minute;
+  second = second < 10 ? "0" + second : second;
+  return year + "-" + month + "-" + date;
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  timeStampToDate: timeStampToDate
 }

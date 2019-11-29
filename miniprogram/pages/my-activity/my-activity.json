@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "v-activity": "/components/item-activity/index"
+  }
+}

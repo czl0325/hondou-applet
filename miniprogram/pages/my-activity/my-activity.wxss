@@ -1,0 +1,6 @@
+/* pages/my-activity/my-activity.wxss */
+.item-container {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #a1a1a1;
+}
