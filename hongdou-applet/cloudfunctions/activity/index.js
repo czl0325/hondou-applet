@@ -137,7 +137,7 @@ exports.main = async(event, context) => {
       result.code = 100
       result.message = "缺少参数collect"
       ctx.body = result
-      await next();
+      return
     }
     if (event.activity_id == null) {
       result.code = 100
@@ -245,7 +245,7 @@ exports.main = async(event, context) => {
       result.code = 100
       result.message = "缺少参数signup"
       ctx.body = result
-      await next();
+      return
     }
     if (event.activity_id == null) {
       result.code = 100

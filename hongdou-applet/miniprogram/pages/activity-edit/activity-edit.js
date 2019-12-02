@@ -116,7 +116,7 @@ Page({
         // 文件扩展名
         let suffix = /\.\w+$/.exec(image)[0]
         wx.cloud.uploadFile({
-          cloudPath: 'avtivity_images/' + new Date().getTime() + '_' + Math.random() * 1000000 + suffix,
+          cloudPath: 'activity_images/' + new Date().getTime() + '_' + Math.random() * 1000000 + suffix,
           filePath: image,
           success: (res) => {
             fileIds = fileIds.concat(res.fileID)
