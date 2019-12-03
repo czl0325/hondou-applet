@@ -23,6 +23,12 @@ app.use(async (ctx, next) => {
     await next()
 })
 
+const activity = require('./controller/Activity.js')
+router.use("/activity", activity.routes())
+
+app.use(router.routes())
+app.use(router.allowedMethods())
+
 app.listen(3000, ()=>{
     console.log("服务器启动在3000端口")
 })

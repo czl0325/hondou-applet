@@ -23,7 +23,7 @@ const dbInsert = async (ctx, query = {}) => {
     const access_token = await getAccessToken()
     const options = {
         method: 'POST',
-        uri: `https://api.weixin.qq.com/tcb/databasedelete?access_token=${access_token}`,
+        uri: `https://api.weixin.qq.com/tcb/databaseadd?access_token=${access_token}`,
         body: {
             query,
             env: ctx.state.env
@@ -41,7 +41,7 @@ const dbDelete = async (ctx, query = {}) => {
     const access_token = await getAccessToken()
     const options = {
         method: 'POST',
-        uri: `https://api.weixin.qq.com/tcb/databaseadd?access_token=${access_token}`,
+        uri: `https://api.weixin.qq.com/tcb/databasedelete?access_token=${access_token}`,
         body: {
             query,
             env: ctx.state.env
