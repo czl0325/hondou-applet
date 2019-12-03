@@ -121,7 +121,7 @@ class Request extends HTTP {
       name: 'activity',
       data: {
         activity_id,
-        // signup,
+        signup,
         $url: 'signup',
         avatarUrl: user.avatarUrl,
         nickName: user.nickName
