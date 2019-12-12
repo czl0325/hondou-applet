@@ -9,7 +9,7 @@ const ENV = "hongdou-ow8qk"
 
 // 跨域
 app.use(cors({
-    origin: "*",
+    origin: ['http://localhost:9528'],
     credentials: true
 }))
 
@@ -29,6 +29,6 @@ router.use("/activity", activity.routes())
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-app.listen(3000, ()=>{
+app.listen(3000, () => {
     console.log("服务器启动在3000端口")
 })

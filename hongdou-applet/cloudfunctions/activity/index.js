@@ -93,10 +93,8 @@ exports.main = async(event, context) => {
       result.code = 100
       result.message = "缺少参数activity_id"
     } else {
-      let activity = await db.collection('activity').where({
-        _id: event.activity_id
-      }).get().then(res=>{
-        return res.data[0]
+      let activity = await db.collection('activity').doc(event.activity_id).get().then(res=>{
+        return res.data
       }).catch(err=>{
         return null
       })

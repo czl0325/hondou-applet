@@ -15,7 +15,42 @@ router.get('/list', async (ctx, next)=>{
     const res = await dbQuery(ctx, query)
     ctx.body = {
         code: 20000,
-        data: res.data
+        data: JSON.parse(res.data) || {}
+    }
+});
+
+router.get('/detail', async (ctx, next) => {
+    const params = ctx.request.query
+    if (params.id == null) {
+        ctx.body = {
+            code: 30001,
+            message: "缺少必要参数"
+        };
+        return ;
+    }
+    const query = `db.collection('activity').doc('${params.id}').get()`;
+    const res = await dbQuery(ctx, query)
+    let activity = {}
+    if (res.data.length > 0) {
+        activity = res.data[0]
+    }
+    if (typeof activity === 'string') {
+        activity = JSON.parse(activity) || {}
+    }
+    if (activity.images.length > 0) {
+        let file_list = []
+        for (let i=0; i<activity.images.length; i++) {
+            file_list.push({
+                fileid: activity.images[i],
+                max_age: 7200
+            })
+        }
+        const result2 = await dbStorage.download(ctx, file_list)
+        activity.images = result2.file_list
+    }
+    ctx.body = {
+        code: 20000,
+        data: activity || {}
     }
 });
 
