@@ -1,7 +1,7 @@
 <!--miniprogram/pages/activity-edit/activity-edit.wxml-->
 <view class="container" style="padding-bottom:120rpx;">
   <input placeholder="请输入标题" bindinput="onAcitivityTitle"></input>
-  <textarea placeholder="请输入内容" bindinput="onInputContent"></textarea>
+  <textarea placeholder="请输入内容" bindinput="onInputContent" maxlength="-1"></textarea>
   <view class="image-list">
     <!-- 显示图片 -->
     <block wx:for="{{images}}" wx:key="*this">

@@ -49,8 +49,24 @@ const dateToString = (date) => {
   return dateTime;
 }
 
+const escape2Html = (str) => {
+  var arrEntities = {
+    'lt': '<',
+    'gt': '>',
+    'nbsp': ' ',
+    'amp': '&',
+    'quot': '"'
+  };
+  str = str.replace(/\<img/gi, '<img style="max-width:100%;height:auto;width:100%" ')
+  str = str.replace(/src='\/UpFile/gi, "src='http://www.ecl.com.cn/UpFile")
+  return str.replace(/&(lt|gt|nbsp|amp|quot);/ig, function (all, t) {
+    return arrEntities[t];
+  });
+}
+
 module.exports = {
   formatTime,
   stringToDate,
-  dateToString
+  dateToString,
+  escape2Html
 }

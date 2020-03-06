@@ -6,6 +6,7 @@ import {
 
 const requestModel = new Request()
 const app = getApp()
+const utils = require('../../utils/utils.js')
 
 Page({
 
@@ -74,6 +75,7 @@ Page({
       title: '内容加载中...',
     })
     requestModel.getActivityDetail(activity_id).then(res => {
+      res.content = utils.escape2Html(res.content)
       this.setData({
         activity: res
       })
