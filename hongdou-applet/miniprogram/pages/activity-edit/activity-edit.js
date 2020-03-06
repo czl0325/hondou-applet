@@ -3,9 +3,10 @@ import {
   Request
 } from '../../http/request.js'
 
-var requestModel = new Request()
-var myEvent = require('../../utils/event.js')
-var app = getApp()
+const requestModel = new Request()
+const myEvent = require('../../utils/event.js')
+const app = getApp()
+const utils = require('../../utils/utils.js')
 
 var title = ''
 var content = ''
@@ -57,6 +58,7 @@ Page({
   },
 
   bindDateChange1(event) {
+    console.log(event.detail.value)
     this.setData({
       signEndDate: event.detail.value
     })
@@ -66,7 +68,6 @@ Page({
     this.setData({
       activityDate: event.detail.value
     })
-    
   },
 
   onPublish(event) {
@@ -94,8 +95,8 @@ Page({
       })
       return
     }
-    var date1 = new Date(this.data.signEndDate)
-    var date2 = new Date(this.data.activityDate)
+    var date1 = utils.stringToDate(this.data.signEndDate)
+    var date2 = utils.stringToDate(this.data.activityDate)
     if (date2 < date1) {
       wx.showToast({
         title: '活动开始时间不得早于报名截止时间',

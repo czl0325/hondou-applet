@@ -4,7 +4,7 @@ import {
   Request
 } from '/http/request.js'
 
-var requestModel = new Request()
+const requestModel = new Request()
 
 App({
   onLaunch: function() {
@@ -18,15 +18,19 @@ App({
       })
     }
 
-    Promise.resolve().then(()=>{
-      return this.getOpenId()
-    }).then((openId)=>{
-      this.globalData.userInfo._openid = openId
-      wx.setStorageSync("openId", openId)
-      return requestModel.getUserInfo(openId)
-    }).then(res=>{
+    requestModel.getUserInfo().then(res=>{
       this.globalData.userInfo = res
     })
+
+    // Promise.resolve().then(()=>{
+    //   return this.getOpenId()
+    // }).then((openId)=>{
+    //   this.globalData.userInfo._openid = openId
+    //   wx.setStorageSync("openId", openId)
+    //   return requestModel.getUserInfo(openId)
+    // }).then(res=>{
+    //   this.globalData.userInfo = res
+    // })
   },
 
   getOpenId() {
@@ -46,9 +50,11 @@ App({
   globalData: {
     userInfo: {
       _openid: '',
-      nickName: '未登录',
       avatarUrl: '',
-      phone: '未设置手机号码'
+      nickName: '未登录',
+      phone: '未设置手机号码',
+      realName: '',
+      idNumber: ''
     }
   }
 })

@@ -45,7 +45,8 @@ page {
 
 .cell {
   width: 100%;
-  padding: 20rpx;
+  padding: 0 20rpx;
+  height: 100rpx;
   min-height: 100rpx;
   box-sizing: border-box;
   border-bottom: 1px solid #ddd;

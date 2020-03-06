@@ -4,8 +4,8 @@ import {
   Request
 } from '../../http/request.js'
 
-var requestModel = new Request()
-var app = getApp()
+const requestModel = new Request()
+const app = getApp()
 
 Page({
 
@@ -23,100 +23,50 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this._getActivityDetail(options.activity_id)
   },
 
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
 
   async onCollect(event) {
-    var user = await this._checkLogin()
-    if (user._id != null) {
-      wx.showLoading({
-        title: '处理中...',
+    var user = app.globalData.userInfo
+    if (!user._id || user.phone.length != 11 || user.idNumber.length <= 0) {
+      this.setData({
+        modalShow: true
       })
-      requestModel.collectActivity(this.data.activity._id, app.globalData.userInfo, (this.data.isCollect == true ? 0 : 1)).then(res => {
-        this.setData({
-          isCollect: res.collect
-        })
-      })
+      return
     }
-  },
-
-  onLoginSuccess(event) {
-    app.globalData.userInfo.nickName = event.detail.userInfo.nickName
-    app.globalData.userInfo.avatarUrl = event.detail.userInfo.avatarUrl
-    this.setData({
-      userInfo: app.globalData.userInfo
+    wx.showLoading({
+      title: '处理中...',
     })
-    requestModel.register({
-      openId: app.globalData.userInfo.openId,
-      avatarUrl: app.globalData.userInfo.avatarUrl,
-      nickName: app.globalData.userInfo.nickName
-    }).then(res => {
-      wx.showToast({
-        title: '登录成功!',
+    requestModel.collectActivity(this.data.activity._id, app.globalData.userInfo, (this.data.isCollect == true ? 0 : 1)).then(res => {
+      this.setData({
+        isCollect: res.collect
       })
     })
   },
 
-  onLoginFail(event) {
-    wx.showToast({
-      title: '登录用户才可以操作',
-    })
-  },
-
+  //报名活动
   async onSignUp(event) {
-    var user = await this._checkLogin()
-    if (user._id != null) {
-      if (app.globalData.userInfo.phone.length != 11) {
-        wx.navigateTo({
-          url: '../bindPhone/bindPhone',
-          success: res => {
-            wx.showToast({
-              title: '请先绑定电话号码',
-              icon: 'none',
-              duration: 2000
-            })
-          }
-        })
-        return
-      }
-      wx.showLoading({
-        title: '处理中...',
+    var user = app.globalData.userInfo
+    if (!user._id || user.phone.length != 11 || user.idNumber.length <= 0) {
+      this.setData({
+        modalShow: true
       })
-      requestModel.signupActivity(this.data.activity._id, app.globalData.userInfo, (this.data.isSignup == true ? 0 : 1)).then((res) => {
-        this.setData({
-          isSignup: res.signup
-        })
-        this._getParticipants(this.data.activity._id)
-      })
+      return
     }
-  },
-
-  async _checkLogin() {
-    if (app.globalData.userInfo._id != null) {
-      return app.globalData.userInfo
-    } 
-    let result = await wx.getSetting({
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: (res) => {
-              return res.userInfo
-            }
-          })
-        } else {
-          this.setData({
-            modalShow: true,
-          })
-          return null
-        }
-      }
+    wx.showLoading({
+      title: '处理中...',
     })
-    return result
+    requestModel.signupActivity(this.data.activity._id, user, (this.data.isSignup == true ? 0 : 1)).then((res) => {
+      this.setData({
+        isSignup: res.signup
+      })
+      this._getParticipants(this.data.activity._id)
+    })
   },
 
   _getActivityDetail(activity_id) {

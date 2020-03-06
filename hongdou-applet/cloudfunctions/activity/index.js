@@ -24,13 +24,15 @@ exports.main = async(event, context) => {
     const activity = {
       nickName: event.nickName,
       avatarUrl: event.avatarUrl,
-      _openid: event.openid ? event.openid : OPENID,
+      _openid: OPENID,
       title: event.title,
       content: event.content,
       images: event.images ? event.images : [],
-      signEndDate: Date.parse(event.signEndDate),
-      activityDate: Date.parse(event.activityDate),
-      createTime: event.createTime ? event.createTime : db.serverDate()
+      //signEndDate: Date.parse(event.signEndDate),
+      //activityDate: Date.parse(event.activityDate),
+      signEndDate: stringToDate(event.signEndDate),
+      activityDate: stringToDate(event.activityDate),
+      createTime: db.serverDate()
     }
     let _id = await db.collection('activity').add({
       data: {
@@ -98,6 +100,8 @@ exports.main = async(event, context) => {
       }).catch(err=>{
         return null
       })
+      console.log(event.activity_id)
+      console.log(activity)
       if (activity != null) {
         result.data = activity
       } else {
@@ -346,4 +350,18 @@ exports.main = async(event, context) => {
   })
 
   return app.serve()
+}
+
+function stringToDate(dateStr, separator = "-") {
+  var dateArr = dateStr.split(separator);
+  var year = parseInt(dateArr[0]);
+  var month;
+  if (dateArr[1].indexOf("0") == 0) {
+    month = parseInt(dateArr[1].substring(1));
+  } else {
+    month = parseInt(dateArr[1]);
+  }
+  var day = parseInt(dateArr[2]);
+  var date = new Date(year, month - 1, day);
+  return date;
 }

@@ -4,46 +4,41 @@ cloud.init()
 const db = cloud.database()
 
 // 云函数入口函数
-exports.main = async(event, context) => {
+exports.main = async (event, context) => {
   if (event.action == null || event.action.length <= 0) {
     return {
       code: 500,
       message: "缺少action!",
     }
   }
-  const { OPENID } = cloud.getWXContext()
+  const {
+    OPENID
+  } = cloud.getWXContext()
   if (!event._openid) {
     event._openid = OPENID
   }
-  console.log(`openid=${event._openid}`)
   switch (event.action) {
-    case "getUser":
-      {
-        return getUserById(event._openid)
+    case "getUser": {
+      return getUserById(event._openid)
+    }
+    case 'register': {
+      return registerUser(event)
+    }
+    case 'bindPhone': {
+      return bindPhone(event._openid, event.phone)
+    }
+    case "collect": {
+      return getMyCollect(OPENID)
+    }
+    case "join": {
+      return getMyJoin(OPENID)
+    }
+    default: {
+      return {
+        code: 500,
+        message: "找不到该action!",
       }
-    case 'register':
-      {
-        return registerUser(event)
-      }
-    case 'bindPhone':
-      {
-        return bindPhone(event._openid, event.phone)
-      }
-    case "collect":
-      {
-        return getMyCollect(event._openid)
-      }
-    case "join":
-      {
-        return getMyJoin(event._openid)
-      }
-    default:
-      {
-        return {
-          code: 500,
-          message: "找不到该action!",
-        }
-      }
+    }
   }
 }
 
@@ -54,7 +49,6 @@ async function getUserById(openId) {
       message: "用户openId为空!",
     }
   }
-  console.log(`传入的openId=${openId}`)
   let result = await db.collection('user')
     .where({
       _openid: openId
@@ -73,10 +67,9 @@ async function getUserById(openId) {
         }
       }
     }).catch(err => {
-      console.log(`错误信息=${err}`)
       return {
         code: 102,
-        message: "您还没有注册，请点击头像进行注册!"
+        message: "您还没有注册!"
       }
     })
   return result
@@ -94,44 +87,32 @@ async function registerUser(event) {
       }
     })
   if (user != null && user._id != null) {
-    let result = await db.collection('user')
-      .where({
-        _openid: event._openid,
-      }).update({
-        data: {
-          avatarUrl: event.avatarUrl,
-          nickName: event.nickName,
-          phone: event.phone,
-          updateTime: db.serverDate(),
-        }
-      }).then(res => {
-
-      })
-    let newUser = await getUserById(event._openid)
     return {
-      code: 0,
-      message: "登录成功!",
-      data: newUser
+      code: 102,
+      message: "您已注册过!",
+      data: null
     }
   } else {
-    const user = {
+    var newUser = {
       _openid: event._openid,
-      avatarUrl: event.avatarUrl,
-      nickName: event.nickName,
+      avatarUrl: event.avatarUrl ? event.avatarUrl : '',
+      nickName: event.nickName ? event.nickName : '',
+      realName: event.realName ? event.realName : '',
       phone: event.phone ? event.phone : '',
+      idNumber: event.idNumber ? event.idNumber : '',
       createTime: db.serverDate(),
     }
     let result = await db.collection('user')
       .add({
         data: {
-          ...user
+          ...newUser
         }
       }).then((res) => {
-        user._id = res._id
+        newUser._id = res._id
         return {
           code: 0,
           message: "注册成功!",
-          data: user
+          data: newUser
         }
       }).catch((err) => {
         return {
@@ -181,9 +162,9 @@ async function bindPhone(openId, phone) {
 async function getMyCollect(openId) {
   let collects = await db.collection('collect').where({
     _openid: openId
-  }).orderBy('createTime', 'desc').get().then(res=>{
+  }).orderBy('createTime', 'desc').get().then(res => {
     return res.data
-  }).catch(err=>{
+  }).catch(err => {
     return null
   })
   if (collects == null) {
@@ -194,12 +175,15 @@ async function getMyCollect(openId) {
   }
   var activities = []
   for (let c of collects) {
+    console.log(c.activity_id)
     let activity = await db.collection('activity').where({
       $url: 'detail',
       activity_id: c.activity_id
-    }).get().then(res=>{
+    }).get().then(res => {
+      console.log(res)
       return res.data
-    }).catch(err=>{
+    }).catch(err => {
+      console.log(err)
       return null
     })
     if (activity != null) {

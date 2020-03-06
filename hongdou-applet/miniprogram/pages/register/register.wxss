@@ -1,0 +1,23 @@
+/* miniprogram/pages/register/register.wxss */
+
+.avatar {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 40rpx auto 0;
+} 
+
+.name {
+  margin: 30rpx auto;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+
+.bind {
+  width: 95%;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 20rpx auto;
+}

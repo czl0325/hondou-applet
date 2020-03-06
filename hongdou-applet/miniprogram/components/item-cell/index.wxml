@@ -12,5 +12,5 @@
     <text class='detail detail_class'>{{detail}}</text>
   </picker>
   <text wx:else class='detail detail_class'>{{detail}}</text>
-  <image src='image/arrow-right.png' class='arrow' wx:if='{{!hideArrow}}'></image>
+  <image src='./image/arrow-right.png' class='arrow' wx:if='{{!hideArrow}}'></image>
 </view>

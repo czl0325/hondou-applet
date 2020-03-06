@@ -1,4 +1,6 @@
 // components/dialog-login/index.js
+const app = getApp()
+
 Component({
   /**
    * 组件的属性列表
@@ -21,15 +23,16 @@ Component({
     onGotUserInfo(event) {
       const userInfo = event.detail.userInfo
       if (userInfo) {
-        this.setData({
-          modalShow: false
+        app.globalData.userInfo.avatarUrl = userInfo.avatarUrl
+        app.globalData.userInfo.nickName = userInfo.nickName
+      } 
+      this.setData({
+        modalShow: false
+      },()=>{
+        wx.navigateTo({
+          url: '../../pages/register/register',
         })
-        this.triggerEvent('loginSuccess', {
-          userInfo
-        })
-      } else {
-        this.triggerEvent('loginFail')
-      }
+      })
     }
   }
 })

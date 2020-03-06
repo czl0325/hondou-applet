@@ -1,6 +1,7 @@
 <!--components/dialog-login/index.wxml-->
 <bottom-dialog modalShow="{{modalShow}}">
   <view slot="dialog-content" >
-    <button class="login" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">登录</button>
+    <text class="remind">您需要注册后才能进行以下操作</text>
+    <button class="login" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">注册</button>
   </view>
 </bottom-dialog>

@@ -2,11 +2,11 @@
   "pages": [
     "pages/home/home",
     "pages/me/me",
-    "pages/bindPhone/bindPhone",
     "pages/activity-edit/activity-edit",
     "pages/activity-detail/activity-detail",
     "pages/user-info/user-info",
-    "pages/my-activity/my-activity"
+    "pages/my-activity/my-activity",
+    "pages/register/register"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

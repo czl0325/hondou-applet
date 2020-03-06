@@ -7,7 +7,6 @@ var requestModel = new Request()
 var app = getApp()
 
 Page({
-
   /**
    * 页面的初始数据
    */

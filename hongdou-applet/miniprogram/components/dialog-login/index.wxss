@@ -1,4 +1,9 @@
 /* components/dialog-login/index.wxss */
+
+.remind {
+  margin: 30rpx auto;
+}
+
 .login {
   font-size: 32rpx;
   height: 100rpx;

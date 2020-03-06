@@ -2,7 +2,7 @@ const formatTime = (date) => {
   if (date == null) {
     return ''
   }
-  if (typeof(date) != 'string') {
+  if (typeof (date) != 'string') {
     date = date.toString()
   }
   var stamp = (new Date().getTime() - new Date(date).getTime()) / 1000
@@ -21,6 +21,36 @@ const formatTime = (date) => {
   }
 }
 
+const stringToDate = (dateStr, separator = "-") => {
+  var dateArr = dateStr.split(separator);
+  var year = parseInt(dateArr[0]);
+  var month;
+  if (dateArr[1].indexOf("0") == 0) {
+    month = parseInt(dateArr[1].substring(1));
+  } else {
+    month = parseInt(dateArr[1]);
+  }
+  var day = parseInt(dateArr[2]);
+  var date = new Date(year, month - 1, day);
+  return date;
+}
+
+const dateToString = (date) => {
+  var year = date.getFullYear();
+  var month = (date.getMonth() + 1).toString();
+  var day = (date.getDate()).toString();
+  if (month.length == 1) {
+    month = "0" + month;
+  }
+  if (day.length == 1) {
+    day = "0" + day;
+  }
+  var dateTime = year + "-" + month + "-" + day;
+  return dateTime;
+}
+
 module.exports = {
-  formatTime
+  formatTime,
+  stringToDate,
+  dateToString
 }

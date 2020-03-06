@@ -24,10 +24,11 @@ class Request extends HTTP {
       name: 'user',
       data: {
         action: 'register',
-        openId: user.openId || '',
         avatarUrl: user.avatarUrl || '',
         nickName: user.nickName || '',
+        realName: user.realName || '',
         phone: user.phone || '',
+        idNumber: user.idNumber || ''
       }
     })
   }
@@ -116,7 +117,6 @@ class Request extends HTTP {
   }
 
   signupActivity(activity_id, user, signup=1) {
-    console.log(signup)
     return this.request({
       name: 'activity',
       data: {

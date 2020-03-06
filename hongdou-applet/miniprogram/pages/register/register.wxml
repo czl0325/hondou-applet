@@ -1,0 +1,9 @@
+<!--miniprogram/pages/register/register.wxml-->
+<view class="container">
+	<image class="avatar" src="{{user.avatarUrl}}"></image>
+	<text class="name">{{user.nickName}}</text>
+	<v-input class="cell" title='真实姓名' placeholder='请填写真实姓名' hideArrow bind:onInput="onRealName"/>
+	<v-input class="cell" type="number" title='手机号码' placeholder='请填写手机号码' hideArrow bind:onInput="onPhone"/>
+	<v-input class="cell" title='身份证号' placeholder='请填写身份证号' hideArrow bind:onInput="onIdNumber"/>
+	<button style="width:95%;height:80rpx;margin-top:20rpx;line-height:80rpx;" bindtap="onRegister">注册</button>
+</view>
