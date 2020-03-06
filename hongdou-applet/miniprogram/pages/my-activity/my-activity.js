@@ -30,6 +30,7 @@ Page({
 
   _getMyCollect() {
     requestModel.getMyCollect().then(res => {
+      console.log(res)
       this.setData({
         activities: res
       })

@@ -175,25 +175,14 @@ async function getMyCollect(openId) {
   }
   var activities = []
   for (let c of collects) {
-    console.log(c.activity_id)
-    // let activity = await db.collection('activity').where({
-    //   $url: 'detail',
-    //   activity_id: c.activity_id
-    // }).get().then(res => {
-    //   console.log(res)
-    //   return res.data
-    // }).catch(err => {
-    //   console.log(err)
-    //   return null
-    // })
-    let activity = await cloud.callFunction({
+    let request = await cloud.callFunction({
       name: 'activity',
       data: {
         $url: 'detail',
         activity_id: c.activity_id
       }
     })
-    console.log(activity)
+    let activity = request.result.data
     if (activity != null) {
       activities.push(activity)
     }
@@ -221,15 +210,16 @@ async function getMyJoin(openId) {
   }
   var activities = []
   for (let s of signups) {
-    let activity = await db.collection('activity').where({
-      _id: s.activity_id
-    }).get().then(res => {
-      return res.data
-    }).catch(err => {
-      return null
+    let request = await cloud.callFunction({
+      name: 'activity',
+      data: {
+        $url: 'detail',
+        activity_id: s.activity_id
+      }
     })
-    if (activity != null && activity.length > 0) {
-      activities.push(activity[0])
+    let activity = request.result.data
+    if (activity != null) {
+      activities.push(activity)
     }
   }
   return {

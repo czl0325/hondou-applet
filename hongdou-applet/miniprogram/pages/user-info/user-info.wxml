@@ -1,9 +1,17 @@
 <!--pages/user-info/user-info.wxml-->
 <view class="container">
-  <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-  <text>{{userInfo.nickName}}</text>
-  <view class="phone">
-    <text>{{userInfo.phone}}</text>
-    <image style="width:60rpx;height:60rpx;padding:10rpx;box-sizing:border-box;" src="../../images/icon_phone.png" bindtap="onCallPhone"></image>
-  </view>
+	<image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+	<text>{{userInfo.nickName}}</text>
+	<view class="phone">
+		<text>{{userInfo.phone}}</text>
+		<image style="width:60rpx;height:60rpx;padding:10rpx;box-sizing:border-box;" src="../../images/icon_phone.png" bindtap="onCallPhone"></image>
+	</view>
+	<view class="phone">
+		<text>真实姓名：</text>
+		<text>{{userInfo.realName}}</text>
+	</view>
+	<view class="phone">
+		<text>身份证号：</text>
+		<text>{{userInfo.idNumber}}</text>
+	</view>
 </view>
