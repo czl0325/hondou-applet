@@ -176,16 +176,24 @@ async function getMyCollect(openId) {
   var activities = []
   for (let c of collects) {
     console.log(c.activity_id)
-    let activity = await db.collection('activity').where({
-      $url: 'detail',
-      activity_id: c.activity_id
-    }).get().then(res => {
-      console.log(res)
-      return res.data
-    }).catch(err => {
-      console.log(err)
-      return null
+    // let activity = await db.collection('activity').where({
+    //   $url: 'detail',
+    //   activity_id: c.activity_id
+    // }).get().then(res => {
+    //   console.log(res)
+    //   return res.data
+    // }).catch(err => {
+    //   console.log(err)
+    //   return null
+    // })
+    let activity = await cloud.callFunction({
+      name: 'activity',
+      data: {
+        $url: 'detail',
+        activity_id: c.activity_id
+      }
     })
+    console.log(activity)
     if (activity != null) {
       activities.push(activity)
     }
