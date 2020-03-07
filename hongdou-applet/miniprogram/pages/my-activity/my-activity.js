@@ -29,6 +29,9 @@ Page({
   },
 
   _getMyCollect() {
+    wx.showLoading({
+      title: '数据获取中...',
+    })
     requestModel.getMyCollect().then(res => {
       console.log(res)
       this.setData({
@@ -38,6 +41,9 @@ Page({
   },
 
   _getMyJoin() {
+    wx.showLoading({
+      title: '数据获取中...',
+    })
     requestModel.getMyJoin().then(res => {
       this.setData({
         activities: res

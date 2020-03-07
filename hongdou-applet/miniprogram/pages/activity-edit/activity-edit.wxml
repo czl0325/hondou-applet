@@ -17,7 +17,7 @@
   </view>
   
   <text style="width:100%;margin-top:20rpx;margin-left:20rpx;">选择报名截止日期</text>
-  <picker mode="date" value="{{signEndDate}}" bindchange="bindDateChange1" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
+  <picker mode="time" value="{{signEndDate}}" bindchange="bindDateChange1" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
     <view class="picker">
       当前选择: {{signEndDate}}
     </view>
