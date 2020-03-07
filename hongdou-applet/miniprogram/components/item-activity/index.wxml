@@ -1,4 +1,6 @@
 <!--components/item-activity/index.wxml-->
+<wxs src="../../utils/tools.wxs" module="tools"/> 
+
 <view class="item-container" bindtap="onClickActivity">
   <text class="title">{{activity.title}}</text>
   <view class="user-container">

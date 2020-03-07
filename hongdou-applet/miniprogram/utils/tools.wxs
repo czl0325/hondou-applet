@@ -18,7 +18,7 @@ var formatTime = function (date) {
   }
 }
 
-var timeStampToDate = function date(timestamp) {
+var timeStampToDate = function (timestamp) {
   var time = getDate(timestamp);
   var year = time.getFullYear();
   var month = time.getMonth() + 1;
@@ -34,7 +34,15 @@ var timeStampToDate = function date(timestamp) {
   return year + "-" + month + "-" + date;
 }
 
+var getChinese = function (str) {
+  // var reg1 = getRegExp("\n+", "g");
+  // str.replace(reg1, "")
+  var reg2 = getRegExp('[\u4E00-\u9FA5]+', 'gi');
+  return reg2.exec(str)
+}
+
 module.exports = {
   formatTime: formatTime,
-  timeStampToDate: timeStampToDate
+  timeStampToDate: timeStampToDate,
+  getChinese: getChinese
 }
