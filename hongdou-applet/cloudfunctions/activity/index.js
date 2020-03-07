@@ -62,9 +62,9 @@ exports.main = async(event, context) => {
     var filtrate = {}
     if (event.type != null) {
       if (event.type == 1) {
-        filtrate.activityDate = db.command.gte(new Date().getTime())
+        filtrate.activityDate = db.command.gte(db.serverDate())
       } else if (event.type == 2) {
-        filtrate.activityDate = db.command.lt(new Date().getTime())
+        filtrate.activityDate = db.command.lt(db.serverDate())
       }
     }
     if (event.keyword != null && event.keyword.length > 0) {

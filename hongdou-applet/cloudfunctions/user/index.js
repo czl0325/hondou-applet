@@ -87,42 +87,40 @@ async function registerUser(event) {
       }
     })
   if (user != null && user._id != null) {
-    return {
-      code: 102,
-      message: "您已注册过!",
-      data: null
-    }
-  } else {
-    var newUser = {
-      _openid: event._openid,
-      avatarUrl: event.avatarUrl ? event.avatarUrl : '',
-      nickName: event.nickName ? event.nickName : '',
-      realName: event.realName ? event.realName : '',
-      phone: event.phone ? event.phone : '',
-      idNumber: event.idNumber ? event.idNumber : '',
-      createTime: db.serverDate(),
-    }
-    let result = await db.collection('user')
-      .add({
-        data: {
-          ...newUser
-        }
-      }).then((res) => {
-        newUser._id = res._id
-        return {
-          code: 0,
-          message: "注册成功!",
-          data: newUser
-        }
-      }).catch((err) => {
-        return {
-          code: 101,
-          message: "注册失败!",
-        }
-      })
-
-    return result
+    await db.collection('user').where({
+      _openid: event._openid
+    }).remove()
   }
+
+  var newUser = {
+    _openid: event._openid,
+    avatarUrl: event.avatarUrl ? event.avatarUrl : '',
+    nickName: event.nickName ? event.nickName : '',
+    realName: event.realName ? event.realName : '',
+    phone: event.phone ? event.phone : '',
+    idNumber: event.idNumber ? event.idNumber : '',
+    createTime: db.serverDate(),
+  }
+  let result = await db.collection('user')
+    .add({
+      data: {
+        ...newUser
+      }
+    }).then((res) => {
+      newUser._id = res._id
+      return {
+        code: 0,
+        message: "注册成功!",
+        data: newUser
+      }
+    }).catch((err) => {
+      return {
+        code: 101,
+        message: "注册失败!",
+      }
+    })
+
+  return result
 }
 
 async function bindPhone(openId, phone) {
