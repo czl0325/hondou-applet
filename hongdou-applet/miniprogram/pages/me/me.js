@@ -51,16 +51,18 @@ Page({
     })
   },
 
-  toBindPhone(event) {
-    wx.navigateTo({
-      url: '../bindPhone/bindPhone',
-    })
+  toRegister(event) {
+    if (!app.globalData.userInfo._id) {
+      wx.navigateTo({
+        url: '../register/register',
+      })
+    }
   },
 
   toPublish(event) {
     if (app.globalData.userInfo._id != null) {
       wx.navigateTo({
-        url: '../activity-edit/activity-edit',
+        url: '../activity-edit2/activity-edit2',
       })
     } else {
       wx.getSetting({

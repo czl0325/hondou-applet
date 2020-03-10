@@ -1,0 +1,66 @@
+/* miniprogram/pages/activity-edit2/activity-edit2.wxss */
+@import "../../common/lib/weui.wxss";
+@import "./assets/iconfont.wxss";
+
+input {
+  width: 95%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: white;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  margin-top: 20rpx;
+  border: 1px solid #d8d8d8;
+}
+
+.ql-container {
+  box-sizing: border-box;
+  width: 95%;
+  height: 800rpx;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow: auto;
+  margin: 20rpx auto;
+  padding: 10px 10px 20px 10px;
+  border: 1px solid #ECECEC;
+  background-color: white;
+  border-radius: 10rpx;
+}
+
+.ql-active {
+  color: #22C704;
+}
+
+.iconfont {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.toolbar {
+  box-sizing: border-box;
+  padding: 0 10px;
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ECECEC;
+  border-left: none;
+  border-right: none;
+  background-color: white;
+}
+
+.publish {
+  width: 95%;
+  height: 100rpx;
+  margin: 20rpx 2.5%;
+  line-height: 100rpx;
+}

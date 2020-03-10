@@ -6,7 +6,7 @@ const TcbRouter = require('tcb-router');
 var PageSize = 20
 
 // 云函数入口函数
-exports.main = async(event, context) => {
+exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const {
     OPENID
@@ -20,7 +20,7 @@ exports.main = async(event, context) => {
     message: '成功'
   }
 
-  app.router('publish', async(ctx, next) => {
+  app.router('publish', async (ctx, next) => {
     const activity = {
       nickName: event.nickName,
       avatarUrl: event.avatarUrl,
@@ -34,28 +34,40 @@ exports.main = async(event, context) => {
       activityDate: stringToDate(event.activityDate),
       createTime: db.serverDate()
     }
-    let _id = await db.collection('activity').add({
-      data: {
-        ...activity
+    if (event._id) {
+      try {
+        await db.collection('activity').doc(event._id).update({
+          data: {
+            ...activity
+          }
+        })
+      } catch (e) {
+        console.error(e)
       }
-    }).then((res) => {
-      return res._id
-    }).catch((err) => {
-      console.error(err)
-      return null
-    })
-    if (!_id) {
-      result.code = 500
-      result.message = "数据插入失败"
     } else {
-      activity._id = _id
-      result.data = activity
+      let _id = await db.collection('activity').add({
+        data: {
+          ...activity
+        }
+      }).then((res) => {
+        return res._id
+      }).catch((err) => {
+        console.error(err)
+        return null
+      })
+      if (!_id) {
+        result.code = 500
+        result.message = "数据插入失败"
+      } else {
+        activity._id = _id
+        result.data = activity
+      }
     }
 
     ctx.body = result
   })
 
-  app.router('list', async(ctx, next) => {
+  app.router('list', async (ctx, next) => {
     if (event.pageSize != null) {
       PageSize = parseInt(event.pageSize)
     }
@@ -90,14 +102,14 @@ exports.main = async(event, context) => {
     ctx.body = result
   })
 
-  app.router('detail', async(ctx, next) => {
+  app.router('detail', async (ctx, next) => {
     if (event.activity_id == null) {
       result.code = 100
       result.message = "缺少参数activity_id"
     } else {
-      let activity = await db.collection('activity').doc(event.activity_id).get().then(res=>{
+      let activity = await db.collection('activity').doc(event.activity_id).get().then(res => {
         return res.data
-      }).catch(err=>{
+      }).catch(err => {
         return null
       })
       console.log(event.activity_id)
@@ -112,7 +124,7 @@ exports.main = async(event, context) => {
     ctx.body = result
   })
 
-  app.router('join', async(ctx, next)=>{
+  app.router('join', async (ctx, next) => {
     if (event.activity_id == null) {
       result.code = 100
       result.message = "缺少参数activity_id"
@@ -134,7 +146,7 @@ exports.main = async(event, context) => {
     ctx.body = result
   })
 
-  app.router('collect', async(ctx, next) => {
+  app.router('collect', async (ctx, next) => {
     if (event.collect == null) {
       result.code = 100
       result.message = "缺少参数collect"
@@ -222,7 +234,7 @@ exports.main = async(event, context) => {
     ctx.body = result
   })
 
-  app.router('isCollect', async(ctx, next) => {
+  app.router('isCollect', async (ctx, next) => {
     if (event.activity_id == null) {
       result.code = 100
       result.message = "缺少参数_id"
@@ -242,8 +254,8 @@ exports.main = async(event, context) => {
     ctx.body = result
   })
 
-  app.router('signup', async(ctx, next) => {
-    if (event.signup == null){
+  app.router('signup', async (ctx, next) => {
+    if (event.signup == null) {
       result.code = 100
       result.message = "缺少参数signup"
       ctx.body = result
@@ -331,7 +343,7 @@ exports.main = async(event, context) => {
     ctx.body = result
   })
 
-  app.router('isSignup', async(ctx, next) => {
+  app.router('isSignup', async (ctx, next) => {
     if (event.activity_id == null) {
       result.code = 100
       result.message = "缺少参数_id"

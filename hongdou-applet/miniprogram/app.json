@@ -6,7 +6,8 @@
     "pages/activity-detail/activity-detail",
     "pages/user-info/user-info",
     "pages/my-activity/my-activity",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/activity-edit2/activity-edit2"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
