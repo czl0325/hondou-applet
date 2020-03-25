@@ -1,5 +1,13 @@
 // miniprogram/pages/activity-edit2/activity-edit2.js
+import { Request } from '../../http/request.js'
+const requestModel = new Request()
+const myEvent = require('../../utils/event.js')
+const app = getApp()
+const utils = require('../../utils/utils.js')
+
+var title = ""
 var inputText = ""
+
 Page({
 
   /**
@@ -9,7 +17,9 @@ Page({
     formats: {},
     editorHeight: 300,
     keyboardHeight: 0,
-    isIOS: false
+    isIOS: false,
+    signEndDate: '',
+    activityDate: ''
   },
 
   /**
@@ -67,8 +77,25 @@ Page({
     })
   },
 
+  onAcitivityTitle(event) {
+    title = event.detail.value
+  },
+
   onInputContent(event) {
     inputText = event.detail.html
+  },
+
+  bindDateChange1(event) {
+    console.log(event.detail.value)
+    this.setData({
+      signEndDate: event.detail.value
+    })
+  },
+
+  bindDateChange2(event) {
+    this.setData({
+      activityDate: event.detail.value
+    })
   },
 
   onPublish(event) {
