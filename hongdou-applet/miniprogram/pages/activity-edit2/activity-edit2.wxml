@@ -1,17 +1,17 @@
 <!--miniprogram/pages/activity-edit2/activity-edit2.wxml-->
 <view class="container" >
-  <input placeholder="请输入标题" bindinput="onAcitivityTitle"></input>
+  <input placeholder="请输入标题" bindinput="onAcitivityTitle" value="{{title}}"></input>
   <editor id="editor" class="ql-container" placeholder="请输入内容" bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput="onInputContent">
   </editor>
   
   <text style="width:100%;margin-left:20rpx;">选择报名截止日期</text>
-  <picker mode="date" value="{{signEndDate}}" bindchange="bindDateChange1" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
+  <picker mode="multiSelector" value="{{dateTime1}}" bindchange="bindDateChange1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
     <view class="picker">
       当前选择: {{signEndDate}}
     </view>
   </picker>
   <text style="width:100%;margin-top:20rpx;margin-left:20rpx;">选择活动开始日期</text>
-  <picker mode="date" value="{{activityDate}}" bindchange="bindDateChange2" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
+  <picker mode="multiSelector" value="{{dateTime1}}" bindchange="bindDateChange2" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}" style="width:100%;margin-top:20rpx;margin-left:20rpx;">
     <view class="picker">
       当前选择: {{activityDate}}
     </view>

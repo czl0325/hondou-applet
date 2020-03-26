@@ -18,7 +18,8 @@ Page({
     participants: [],
     isCollect: false,
     isSignup: false,
-    modalShow: false
+    modalShow: false,
+    canEdit: false
   },
 
   /**
@@ -70,6 +71,12 @@ Page({
     })
   },
 
+  onEdit(event) {
+    wx.navigateTo({
+      url: '../activity-edit2/activity-edit2?activity_id=' + this.data.activity._id,
+    })
+  },
+
   _getActivityDetail(activity_id) {
     wx.showLoading({
       title: '内容加载中...',
@@ -77,7 +84,8 @@ Page({
     requestModel.getActivityDetail(activity_id).then(res => {
       res.content = utils.escape2Html(res.content)
       this.setData({
-        activity: res
+        activity: res, 
+        canEdit: app.globalData.userInfo._openid == res._openid
       })
       wx.setNavigationBarTitle({
         title: this.data.activity.title,

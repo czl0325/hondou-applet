@@ -8,7 +8,7 @@
     <text class="name">{{activity.nickName}}</text>
     <text class="time">{{_createTime}}</text>
   </view>
-  <text class="content">{{activity.content}}</text>
+  <text class="content">{{util.getHanzi(activity.content)}}</text>
   <view class="image-container">
     <block wx:for="{{_images}}" wx:key="*this">
       <image src="{{item}}"></image>
@@ -16,3 +16,16 @@
   </view>
   <!-- <text style="width:100%;margin-top:20rpx;text-align:right;">报名人数：{{activity.participants.length}}人</text> -->
 </view>
+
+
+<wxs module="util">
+  var getHanzi = function(text) {
+    if (!text) 
+      return ""
+    var pattern = getRegExp("[^\u4e00-\u9fa5]", "g")
+    return text.replace(pattern, "")
+  }
+  module.exports = {
+    getHanzi: getHanzi
+  }
+</wxs>

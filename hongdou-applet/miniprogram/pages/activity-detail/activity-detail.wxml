@@ -39,6 +39,9 @@
     <image src="{{isSignup?'../../images/icon_signup_hl.png':'../../images/icon_signup_nor.png'}}" style="width:38rpx;height:40rpx;"></image>
     <text style="margin-left:20rpx;{{(isSignup==true)?'color:#FE765E':'color:#333'}}">{{(isSignup==true)?"已报名":"点击报名"}}</text>
   </button>
+    <button bindtap="onEdit" wx:if="{{canEdit}}">
+    <text>修改帖子</text>
+  </button>
 </view>
 
 <v-login modalShow="{{modalShow}}" bind:loginSuccess="onLoginSuccess" bind:loginFail="onLoginFail"/>

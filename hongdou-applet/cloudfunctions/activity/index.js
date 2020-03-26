@@ -30,8 +30,8 @@ exports.main = async (event, context) => {
       images: event.images ? event.images : [],
       //signEndDate: Date.parse(event.signEndDate),
       //activityDate: Date.parse(event.activityDate),
-      signEndDate: stringToDate(event.signEndDate),
-      activityDate: stringToDate(event.activityDate),
+      signEndDate: new Date(event.signEndDate),
+      activityDate: new Date(event.activityDate),
       createTime: db.serverDate()
     }
     if (event._id) {

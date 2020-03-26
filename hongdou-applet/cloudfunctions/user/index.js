@@ -4,7 +4,7 @@ cloud.init()
 const db = cloud.database()
 
 // 云函数入口函数
-exports.main = async (event, context) => {
+exports.main = async(event, context) => {
   if (event.action == null || event.action.length <= 0) {
     return {
       code: 500,
@@ -18,27 +18,33 @@ exports.main = async (event, context) => {
     event._openid = OPENID
   }
   switch (event.action) {
-    case "getUser": {
-      return getUserById(event._openid)
-    }
-    case 'register': {
-      return registerUser(event)
-    }
-    case 'bindPhone': {
-      return bindPhone(event._openid, event.phone)
-    }
-    case "collect": {
-      return getMyCollect(OPENID)
-    }
-    case "join": {
-      return getMyJoin(OPENID)
-    }
-    default: {
-      return {
-        code: 500,
-        message: "找不到该action!",
+    case "getUser":
+      {
+        return getUserById(event._openid)
       }
-    }
+    case 'register':
+      {
+        return registerUser(event)
+      }
+    case 'bindPhone':
+      {
+        return bindPhone(event._openid, event.phone)
+      }
+    case "collect":
+      {
+        return getMyCollect(OPENID)
+      }
+    case "join":
+      {
+        return getMyJoin(OPENID)
+      }
+    default:
+      {
+        return {
+          code: 500,
+          message: "找不到该action!",
+        }
+      }
   }
 }
 

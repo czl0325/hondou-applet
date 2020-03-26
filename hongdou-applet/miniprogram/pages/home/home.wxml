@@ -11,3 +11,4 @@
     <v-activity class="item-container" activity="{{item}}"/>
   </block>
 </view>
+

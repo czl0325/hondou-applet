@@ -14,7 +14,7 @@ class Request extends HTTP {
       name: 'user',
       data: {
         action: 'getUser',
-        openId: openId
+        _openid: openId
       }
     })
   }
@@ -44,7 +44,7 @@ class Request extends HTTP {
     })
   }
 
-  publishActivity(user, title, content, images, signEndDate, activityDate) {
+  publishActivity(user, title, content, images, signEndDate, activityDate, activity_id) {
     return this.request({
       name: 'activity',
       data: {
@@ -53,6 +53,7 @@ class Request extends HTTP {
         images,
         signEndDate,
         activityDate,
+        _id: activity_id,
         $url: 'publish',
         avatarUrl: user.avatarUrl,
         nickName: user.nickName,

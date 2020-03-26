@@ -35,7 +35,7 @@ const stringToDate = (dateStr, separator = "-") => {
   return date;
 }
 
-const dateToString = (date) => {
+const dateToString = (date, toMinute=false) => {
   var year = date.getFullYear();
   var month = (date.getMonth() + 1).toString();
   var day = (date.getDate()).toString();
@@ -45,8 +45,31 @@ const dateToString = (date) => {
   if (day.length == 1) {
     day = "0" + day;
   }
-  var dateTime = year + "-" + month + "-" + day;
+  var last = ""
+  if (toMinute) {
+    last = " " + prefixZero(date.getHours(), 2) + ":" + prefixZero(date.getMinutes(), 2)
+  }
+  var dateTime = year + "-" + month + "-" + day + last;
   return dateTime;
+}
+
+const dateFormat = (fmt, date) => {
+  let ret;
+  const opt = {
+    "Y+": date.getFullYear().toString(),        // 年
+    "m+": (date.getMonth() + 1).toString(),     // 月
+    "d+": date.getDate().toString(),            // 日
+    "H+": date.getHours().toString(),           // 时
+    "M+": date.getMinutes().toString(),         // 分
+    "S+": date.getSeconds().toString()          // 秒
+  };
+  for (let k in opt) {
+    ret = new RegExp("(" + k + ")").exec(fmt);
+    if (ret) {
+      fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+    };
+  };
+  return fmt;
 }
 
 const escape2Html = (str) => {
@@ -64,9 +87,15 @@ const escape2Html = (str) => {
   });
 }
 
+const prefixZero = (num, n) => {
+  return (Array(n).join(0) + num).slice(-n);
+}
+
 module.exports = {
   formatTime,
   stringToDate,
   dateToString,
-  escape2Html
+  escape2Html,
+  dateFormat,
+  prefixZero
 }
