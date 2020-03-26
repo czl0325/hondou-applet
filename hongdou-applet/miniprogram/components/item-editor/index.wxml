@@ -1,0 +1,41 @@
+<!--components/item-editor/index.wxml-->
+<template name="editor">
+  <view class='editor_bg'>
+    <view class='editor_buttonbg'>
+      <view class="iconfont icon-zitijiacu editor_button {{formats.bold ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="bold"></view>
+      <view class="iconfont icon-zitixieti editor_button {{formats.italic ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="italic"></view>
+      <view class="iconfont icon-zitixiahuaxian editor_button {{formats.underline ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="underline"></view>
+      <view class="iconfont icon-zitishanchuxian editor_button {{formats.strike ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="strike"></view>
+      <view class="iconfont icon-zuoduiqi editor_button {{formats.align=='left'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="align" data-value="left"></view>
+      <view class="iconfont icon-juzhongduiqi editor_button {{formats.align=='center'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="align" data-value="center"></view>
+      <view class="iconfont icon-youduiqi editor_button {{formats.align=='right'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="align" data-value="right"></view>
+      <view class="iconfont icon-zuoyouduiqi editor_button {{formats.align=='justify'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="align" data-value="justify"></view>
+      <view class="iconfont icon-line-height editor_button {{formats.lineHeight ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="lineHeight" data-value="2"></view>
+      <view class="iconfont icon-Character-Spacing editor_button {{formats.letterSpacing ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="letterSpacing" data-value="2em"></view>
+      <view class="iconfont icon-722bianjiqi_duanqianju editor_button {{formats.marginTop ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="marginTop" data-value="20px"></view>
+      <view class="iconfont icon-723bianjiqi_duanhouju editor_button {{formats.marginBottom ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="marginBottom" data-value="20px"></view>
+      <view class="iconfont icon-clearedformat editor_button" bindtap='editorjs' data-bind="removeFormat"></view>
+      <view class="iconfont icon-fontsize editor_button {{formats.fontSize==='24px'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="fontSize" data-value="24px"></view>
+      <view class="iconfont icon-font editor_button {{formats.fontFamily ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="fontFamily" data-value="Pacifico"></view>
+      <view class="iconfont icon-text_color editor_button {{formats.color==='#0000ff'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="color" data-value="#0000ff"></view>
+      <view class="iconfont icon-fontbgcolor editor_button {{formats.backgroundColor==='#00ff00'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="backgroundColor" data-value="#00ff00"></view>
+      <view class="iconfont icon-date editor_button" bindtap='editorjs' data-bind="insertDate"></view>
+      <view class="iconfont icon–checklist editor_button" bindtap='editorjs' data-bind="format" data-name="list" data-value="check"></view>
+      <view class="iconfont icon-youxupailie editor_button {{formats.list==='ordered'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="list" data-value="ordered"></view>
+      <view class="iconfont icon-wuxupailie editor_button {{formats.list==='bullet'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="list" data-value="bullet"></view>
+      <view class="iconfont icon-undo editor_button" bindtap='editorjs' data-bind="undo"></view>
+      <view class="iconfont icon-redo editor_button" bindtap='editorjs' data-bind="redo"></view>
+      <view class="iconfont icon-outdent editor_button" bindtap='editorjs' data-bind="format" data-name="indent" data-value="-1"></view>
+      <view class="iconfont icon-indent editor_button" bindtap='editorjs' data-bind="format" data-name="indent" data-value="+1"></view>
+      <view class="iconfont icon-fengexian editor_button" bindtap='editorjs' data-bind="insertDivider"></view>
+      <view class="iconfont icon-charutupian editor_button" bindtap='editorjs' data-bind="insertImage"></view>
+      <view class="iconfont icon-format-header-1 editor_button {{formats.header==1 ? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="header" data-value="{{1}}"></view>
+      <view class="iconfont icon-zitixiabiao editor_button {{formats.script=='sub'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="script" data-value="sub"></view>
+      <view class="iconfont icon-zitishangbiao editor_button {{formats.script==='super'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="script" data-value="super"></view>
+      <view class="iconfont icon-shanchu editor_button" bindtap='editorjs' data-bind="clear"></view>
+      <view class="iconfont icon-direction-rtl editor_button {{formats.direction==='rtl'? 'editor_button_active': ''}}" bindtap='editorjs' data-bind="format" data-name="direction" data-value="rtl"></view>
+    </view>
+    <editor id="editor" class='editor_area' placeholder="开始输入…" showImgSize showImgToolbar showImgResize bindstatuschange="onStatusChange" bindready="onEditorReady" bindinput='setEditor'>
+    </editor>
+  </view>
+</template>
