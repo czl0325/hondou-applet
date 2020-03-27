@@ -22,7 +22,7 @@
       <block wx:for="{{participants}}" wx:key="_openid">
         <view class="user" bindtap="onClickUser" data-index="{{index}}">
           <image src="{{item.avatarUrl}}"></image>
-          <text style="margin-top:10rpx;font-size:26rpx;">{{item.nickName}}</text>
+          <text style="margin-top:10rpx;font-size:26rpx;max-width:180rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{item.nickName}}</text>
         </view>
       </block>
     </view>
