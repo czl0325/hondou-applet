@@ -30,7 +30,9 @@ Page({
   },
 
   onShareAppMessage: function () {
-
+    return {
+      title: this.data.activity.title
+    }
   },
 
   async onCollect(event) {

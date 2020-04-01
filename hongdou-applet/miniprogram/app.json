@@ -7,7 +7,9 @@
     "pages/user-info/user-info",
     "pages/my-activity/my-activity",
     "pages/register/register",
-    "pages/activity-edit2/activity-edit2"
+    "pages/activity-edit2/activity-edit2",
+    "pages/article/article",
+    "pages/web-view/web-view"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -25,6 +27,12 @@
         "text": "首页",
         "iconPath": "images/tab_home_normal.png",
         "selectedIconPath": "images/tab_home_select.png"
+      },
+      {
+        "pagePath": "pages/article/article",
+        "text": "公众号文章",
+        "iconPath": "images/tab_article_normal.png",
+        "selectedIconPath": "images/tab_article_select.png"
       },
       {
         "pagePath": "pages/me/me",

@@ -157,6 +157,15 @@ class Request extends HTTP {
       }
     })
   }
+
+  getArticles() {
+    return this.request({
+      name: 'wechat',
+      data: {
+        $url: 'article'
+      }
+    })
+  }
 }
 
 export {

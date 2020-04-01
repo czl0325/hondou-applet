@@ -91,11 +91,21 @@ const prefixZero = (num, n) => {
   return (Array(n).join(0) + num).slice(-n);
 }
 
+const urlEncode = src => {
+  return src.replace(/\&/g, '@').replace(/\?/g, '^').replace(/\=/g, '!');
+}
+
+const urlDecode = src => {
+  return src.replace(/\@/g, '&').replace(/\^/g, '?').replace(/\!/g, '=')
+}
+
 module.exports = {
   formatTime,
   stringToDate,
   dateToString,
   escape2Html,
   dateFormat,
-  prefixZero
+  prefixZero,
+  urlEncode,
+  urlDecode
 }

@@ -1,0 +1,21 @@
+/* miniprogram/pages/article/article.wxss */
+
+.item-container {
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  padding: 10rpx 20rpx;
+  box-sizing: border-box;
+}
+
+.item-container image {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.item-container text {
+  width: 0;
+  flex-grow: 1;
+  margin-left: 20rpx;
+}
