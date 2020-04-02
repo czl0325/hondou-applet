@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "v-input": "/components/input-cell/index"
-  }
+  },
+  "navigationBarTitleText": "注册"
 }

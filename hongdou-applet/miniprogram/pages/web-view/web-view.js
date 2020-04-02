@@ -1,5 +1,6 @@
 // miniprogram/pages/web-view/web-view.js
 const utils = require('../../utils/utils.js')
+const text = require('../../utils/text.js')
 
 Page({
 
@@ -7,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    url: ""
+    url: "",
+    html_str: ""
   },
 
   /**
@@ -15,10 +17,26 @@ Page({
    */
   onLoad: function (options) {
     if (options.url) {
-      console.log(utils.urlDecode(options.url))
       this.setData({
         url: utils.urlDecode(options.url)
       })
+    }
+    if (options.type) {
+      if (parseInt(options.type) == 1) {
+        wx.setNavigationBarTitle({
+          title: '隐私政策',
+        })
+        this.setData({
+          html_str: text.privacy()
+        })
+      } else {
+        wx.setNavigationBarTitle({
+          title: '服务协议',
+        })
+        this.setData({
+          html_str: text.service()
+        })
+      }
     }
   },
 

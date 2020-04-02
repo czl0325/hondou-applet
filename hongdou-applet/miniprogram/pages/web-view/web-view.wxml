@@ -1,4 +1,5 @@
 <!--miniprogram/pages/web-view/web-view.wxml-->
 <view class="container">
-  <web-view src="{{url}}"></web-view>
+  <web-view src="{{url}}" wx:if="{{url.length>0}}"></web-view>
+  <rich-text nodes="{{html_str}}" wx:if="{{html_str.length>0}}"></rich-text>
 </view>

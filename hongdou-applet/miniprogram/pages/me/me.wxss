@@ -27,3 +27,12 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.logout {
+  margin-top: 30rpx;
+  width: 95%;
+  height: 100rpx;
+  border-radius: 10rpx;
+  line-height: 100rpx;
+  text-align: center;
+}

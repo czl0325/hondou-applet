@@ -11,6 +11,8 @@
 
   <v-cell class='cell' title='我参与的活动' bindtap="toMyActivity" data-index="1"/>
   <v-cell class='cell' title='我收藏的活动' bindtap="toMyActivity" data-index="2"/>
+
+  <!-- <button class="logout" bindtap="onLogout">退出登录</button> -->
 </view>
 
 <v-login modalShow="{{modalShow}}" bind:loginSuccess="onLoginSuccess" bind:loginFail="onLoginFail"/>

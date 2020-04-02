@@ -6,6 +6,8 @@ import {
 const requestModel = new Request()
 const app = getApp()
 
+var is_agree = false
+
 Page({
 
   /**
@@ -46,6 +48,14 @@ Page({
       })
       return
     }
+    if (is_agree == false) {
+      wx.showToast({
+        title: '请先阅读并同意隐私政策和服务协议',
+        icon: 'none',
+        duration: 3000
+      })
+      return
+    }
     wx.showLoading({
       title: '提交注册中...',
     })
@@ -58,6 +68,22 @@ Page({
           })
         }
       })
+    })
+  },
+
+  onCheck(event) {
+    is_agree = !(event.detail.value == '')
+  },
+
+  toPrivacy(event) {
+    wx.navigateTo({
+      url: '../web-view/web-view?type=1',
+    })
+  },
+
+  toService(event) {
+    wx.navigateTo({
+      url: '../web-view/web-view?type=2',
     })
   }
 

@@ -21,3 +21,14 @@
   line-height: 80rpx;
   margin: 20rpx auto;
 }
+
+.check {
+  display: flex;
+  align-items: center;
+  margin: 30rpx 0;
+  font-size: 30rpx;
+}
+
+.check text {
+  color: #2e55f1;
+}

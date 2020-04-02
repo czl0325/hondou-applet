@@ -109,5 +109,12 @@ Page({
     wx.navigateTo({
       url: `../my-activity/my-activity?type=${event.currentTarget.dataset.index}`,
     })
+  },
+
+  onLogout(event) {
+    app.globalData.userInfo = {}
+    this.setData({
+      userInfo: app.globalData.userInfo
+    })
   }
 })
