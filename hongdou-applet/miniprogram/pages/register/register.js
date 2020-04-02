@@ -24,7 +24,6 @@ Page({
     this.setData({
       user: app.globalData.userInfo
     })
-
   },
 
   onRealName(event) {
@@ -40,6 +39,11 @@ Page({
   },
 
   onRegister(event) {
+    const userInfo = event.detail.userInfo
+    if (userInfo) {
+      this.data.user.avatarUrl = userInfo.avatarUrl
+      this.data.user.nickName = userInfo.nickName
+    } 
     if (this.data.user.idNumber.length <= 0 || this.data.user.phone.length != 11 || this.data.user.realName.length <= 0) {
       wx.showToast({
         title: '资料填写不完整',

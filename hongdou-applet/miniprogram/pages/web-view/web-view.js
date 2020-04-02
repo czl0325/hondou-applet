@@ -86,6 +86,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    if (this.data.url.length > 0) {
+      return {
+        path: '/pages/web-view/web-view?url=' + utils.urlEncode(this.data.url) 
+      }
+    } else {
+      return {}
+    }
   }
 })

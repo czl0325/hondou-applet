@@ -12,5 +12,5 @@
     <text bindtap="toService">《服务协议》</text>
   </view>
   </checkbox-group>
-	<button style="width:95%;height:80rpx;margin-top:20rpx;line-height:80rpx;" bindtap="onRegister">注册</button>
+	<button style="width:95%;height:80rpx;margin-top:20rpx;line-height:80rpx;" bindgetuserinfo="onRegister" open-type="getUserInfo">注册</button>
 </view>
