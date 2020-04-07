@@ -4,7 +4,8 @@ import {
   Request
 } from '../../http/request.js'
 
-var requestModel = new Request()
+const requestModel = new Request()
+const app = getApp()
 
 Page({
 
@@ -12,7 +13,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {}
+    userInfo: {},
+    canShow: false
   },
 
   /**
@@ -31,7 +33,8 @@ Page({
   _getUserInfo(_openid) {
     requestModel.getUserInfo(_openid).then(res=>{
       this.setData({
-        userInfo: res
+        userInfo: res,
+        canShow: app.globalData.userInfo._openid == "ocoH25eqQfokZXP629ZcgxoiKHSE"
       })
     })
   }

@@ -97,6 +97,8 @@
   justify-content: center;
   margin-right: 20rpx;
   margin-bottom: 20rpx;
+  width: 25%;
+  max-width: 25%;
 }
 
 .signup-container .user image {

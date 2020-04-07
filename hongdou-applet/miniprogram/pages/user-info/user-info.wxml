@@ -12,6 +12,6 @@
 	</view>
 	<view class="phone">
 		<text>身份证号：</text>
-		<text>{{userInfo.idNumber}}</text>
+		<text>{{canShow?userInfo.idNumber:"仅管理员可见"}}</text>
 	</view>
 </view>

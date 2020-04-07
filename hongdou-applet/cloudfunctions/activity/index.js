@@ -111,9 +111,9 @@ exports.main = async (event, context) => {
         return res.data
       }).catch(err => {
         return null
-      })
-      console.log(event.activity_id)
-      console.log(activity)
+        })
+      activity.signEndDate = activity.signEndDate.toLocaleString()
+      activity.activityDate = activity.activityDate.toLocaleString()
       if (activity != null) {
         result.data = activity
       } else {
