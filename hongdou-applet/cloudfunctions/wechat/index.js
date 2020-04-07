@@ -37,7 +37,6 @@ exports.main = async(event, context) => {
 
   app.router('article', async(ctx, next) => {
     for (var i = 0; i < 3; i++) {
-      console.log("access_token=" + access_token)
       if (access_token == "") {
         access_token = await rp2(`https://service-fwtqa5cw-1301759664.gz.apigw.tencentcs.com/release/get_access_token`).then(res => {
           var res2 = JSON.parse(res)
@@ -47,7 +46,6 @@ exports.main = async(event, context) => {
           return res2.access_token
         })
       }
-      console.log("access_token=" + access_token)
       var options = {
         method: 'POST',
         json: true,
@@ -70,12 +68,15 @@ exports.main = async(event, context) => {
       const res2 = await rp(options)
       let rbody = (typeof res2 === 'object') ? res2 : JSON.parse(res2);
       rbody = rbody.body
-      console.log(rbody)
       if (!rbody) {
         access_token = ""
         continue;
       } else {
         rbody = rbody.item
+        if (!rbody) {
+          access_token = ""
+          continue;
+        }
         articles = []
         for (var bb1 of rbody) {
           for (var bb2 of bb1.content.news_item) {

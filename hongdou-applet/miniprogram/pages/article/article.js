@@ -33,7 +33,7 @@ Page({
     let index = event.currentTarget.dataset.index
     let article = this.data.articles[index]
     wx.navigateTo({
-      url: '../web-view/web-view?url=' + utils.urlEncode(article.url),
+      url: '../web-view/web-view?url=' + utils.urlEncode(article.url) + "&title=" + article.title,
     })
   },
 

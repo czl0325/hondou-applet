@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "公众号文章"
+  "navigationBarTitleText": "公众号文章",
+  "enablePullDownRefresh": true
 }

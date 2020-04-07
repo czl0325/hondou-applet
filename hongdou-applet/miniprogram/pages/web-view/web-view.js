@@ -9,7 +9,8 @@ Page({
    */
   data: {
     url: "",
-    html_str: ""
+    html_str: "",
+    title: ""
   },
 
   /**
@@ -18,6 +19,7 @@ Page({
   onLoad: function (options) {
     if (options.url) {
       this.setData({
+        title: options.title,
         url: utils.urlDecode(options.url)
       })
     }
@@ -27,6 +29,7 @@ Page({
           title: '隐私政策',
         })
         this.setData({
+          title: "隐私政策",
           html_str: text.privacy()
         })
       } else {
@@ -34,6 +37,7 @@ Page({
           title: '服务协议',
         })
         this.setData({
+          title: "服务协议",
           html_str: text.service()
         })
       }
@@ -88,10 +92,13 @@ Page({
   onShareAppMessage: function () {
     if (this.data.url.length > 0) {
       return {
+        title: this.data.title,
         path: '/pages/web-view/web-view?url=' + utils.urlEncode(this.data.url) 
       }
     } else {
-      return {}
+      return {
+        title: this.data.title
+      }
     }
   }
 })
